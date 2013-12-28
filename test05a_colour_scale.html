@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script>
+        function draw() {
+            var canvas = document.getElementById('canvas');
+            var ctx = canvas.getContext("2d");
+            var r, g, b;
+            for (var i = 0; i <= 255; i ++) {
+                var val = i;
+                if (val < 10) {
+                    r = Math.pow(val, 3);
+                    g = 0;
+                    b = 0;
+                }
+                else if (val > 175) {
+                    r = (val-128)*2;
+                    g = 255;
+                    b = (val-105)*3;
+                }
+                else if (val > 128) {
+                    r = (val-128)*2;
+                    g = Math.round((Math.cos((2*val/128*Math.PI/2)- 4*Math.PI/3)+1)*128);
+                    b = (val-105)*3;
+                }
+                else {
+                    r = Math.round((Math.cos((2*val/128*Math.PI/2))+1)*128);
+                    g = Math.round((Math.cos((2*val/128*Math.PI/2)- 4*Math.PI/3)+1)*128);
+                    b = Math.round((Math.cos((2.4*val/128*Math.PI/2)- 2*Math.PI/3)+1)*128);
+                }
+
+                var y = i * 5;
+                ctx.fillStyle = "rgb(" + r + ", 0,0)";
+                ctx.fillRect (5, y, 20,  5);
+                ctx.fillStyle = "rgb(0, " + g + ", 0)";
+                ctx.fillRect (25, y, 20,  5);
+                ctx.fillStyle = "rgb(0, 0, " + b + ")";
+                ctx.fillRect (45, y, 20,  5);
+                ctx.fillStyle = "rgb(" + r + ", " + g + ", " + b + ")";
+                ctx.fillRect (65, y, 20,  5);
+            }
+        }
+    </script>
+</head>
+<body onload="draw()">
+<canvas id="canvas" height="1300" width="85"></canvas>
+</body>
+</html>

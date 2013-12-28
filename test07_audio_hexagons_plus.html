@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script>
+        var visualizer = (function() {
+            var module = {};
+            var tileSize;
+            var tiles = [];
+            var stars = [];
+            // canvas vars
+            var canvas;
+            var ctx;
+            var bgCanvas; // background canvas
+            var bgCtx; // background context
+            var bgImg = new Image();
+            var bgRotation = 0;
+            // audio vars
+            var audioCtx;
+            var analyser;
+            var volume;
+            var mic;
+            var streamData = new Uint8Array(256);
+
+            // get the input stream from the microphone
+            navigator.getMedia = (
+                    navigator.getUserMedia ||
+                    navigator.webkitGetUserMedia ||
+                    navigator.mozGetUserMedia ||
+                    navigator.msGetUserMedia
+                    );
+            navigator.getMedia ( { audio: true }, function (stream) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext);
+                mic = audioCtx.createMediaStreamSource(stream);
+                analyser= audioCtx.createAnalyser();
+                analyser.fftSize = 512;
+                mic.connect(analyser);
+                module.init('canvas', 60);
+                setInterval(sampleAudioStream, 50);
+            }, function(){ /* error handler */});
+
+            function sampleAudioStream() {
+                streamData =  new Uint8Array(256);
+                analyser.getByteFrequencyData(streamData);
+                // calculate an overall volume value
+                var total = 0;
+                for(var i in streamData) {
+                    total += streamData[i];
+                }
+                volume = total;
+            }
+
+            function Polygon(sides, x, y, tileSize, ctx, num) {
+                this.sides = sides;
+                this.tileSize = tileSize;
+                this.ctx = ctx;
+                this.x = x;
+                this.y = y;
+                this.num = num; // the number of the tile, starting at 0
+                this.high = 0; // the highest colour value, which then fades out
+                this.cubed = 0; // value that draws cube-like faces when it is greater than 0
+                this.highlight = 0; // for highlighted stroke effect;
+                // calculate the vertices of the polygon
+                this.vertices = [];
+                for (var i = 1; i <= this.sides;i += 1) {
+                    x = this.x + this.tileSize * Math.cos(i * 2 * Math.PI / this.sides + Math.PI/6);
+                    y = this.y + this.tileSize * Math.sin(i * 2 * Math.PI / this.sides + Math.PI/6);
+                    this.vertices.push([x, y]);
+                }
+            }
+
+            Polygon.prototype.drawPolygon = function() {
+                var bucket = Math.ceil(streamData.length/tiles.length*this.num);
+                var val = streamData[bucket];
+
+                if (val > 0) {
+                    // add some random noise to avoid massive black areas
+                    var rand = Math.random().toPrecision(3);
+                    if (rand === "0.666" || rand === "0.555") {
+                        // 1/1000 chance of this firing each turn
+                        //val = Math.round(Math.random()*128);
+                        this.cubed = Math.round(Math.random()*128);
+                        var a = 0.2;
+                    }
+                }
+                if (val > this.high) {
+                    this.high = val;
+                } else {
+                    this.high -= 1; // increase this value to fade out faster.
+                    val = this.high;
+                }
+
+                var r, g, b, a;
+                if (val > 0) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(this.vertices[0][0], this.vertices[0][1]);
+                    // draw the polygon
+                    for (var i = 0; i <= this.sides-1;i += 1) {
+                        this.ctx.lineTo (this.vertices[i][0], this.vertices[i][1]);
+                    }
+                    this.ctx.closePath();
+                    if (val < 10) {
+                        r = Math.pow(val, 3);
+                        g = 0;
+                        b = 0;
+                    }
+                    else if (val > 128) {
+                        r = (val-128)*2;
+                        g = Math.round((Math.cos((2*val/128*Math.PI/2)- 4*Math.PI/3)+1)*128);
+                        b = (val-105)*3;
+                    }
+                    else if (val > 175) {
+                        r = (val-128)*2;
+                        g = 255;
+                        b = (val-105)*3;
+                    }
+                    else {
+                        r = Math.round((Math.cos((2*val/128*Math.PI/2))+1)*128);
+                        g = Math.round((Math.cos((2*val/128*Math.PI/2)- 4*Math.PI/3)+1)*128);
+                        b = Math.round((Math.cos((2.4*val/128*Math.PI/2)- 2*Math.PI/3)+1)*128);
+                    }
+                    if (val > 200) {
+                        this.cubed = val; // add the cube effect if it's really loud
+                    }
+                    if (val > 100) {
+                        this.highlight = 100; // add the highlight effect if it's pretty loud
+                    }
+                    // set the alpha
+                    //a = val/768 + 0.75;
+                    a = (val + 150)/355;
+
+                    this.ctx.fillStyle = "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
+                    this.ctx.fill();
+                    // stroke
+                    var time = new Date().getTime()/500;
+                    var strokeVal = Math.round((Math.sin(time+this.num/70)+5)*5);
+                    this.ctx.strokeStyle =  "rgb(" + strokeVal + ", " + strokeVal + ", " + strokeVal + ")";
+                    this.ctx.lineWidth = 1;
+                    this.ctx.stroke();
+                }
+
+
+
+                // draw the cube faces if "cubed" is > 0
+                if (this.cubed > 0) {
+                    a = this.cubed/400;
+                    // draw a face of the cube
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(this.x, this.y);
+                    this.ctx.lineTo (this.vertices[0][0], this.vertices[0][1]);
+                    this.ctx.lineTo (this.vertices[1][0], this.vertices[1][1]);
+                    this.ctx.lineTo (this.vertices[2][0], this.vertices[2][1]);
+                    this.ctx.closePath();
+                    this.ctx.fillStyle = "rgba(40,40,40," + a + ")";
+                    this.ctx.fill();
+
+                    // draw another face of the cube
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(this.x, this.y);
+                    this.ctx.lineTo (this.vertices[4][0], this.vertices[4][1]);
+                    this.ctx.lineTo (this.vertices[5][0], this.vertices[5][1]);
+                    this.ctx.lineTo (this.vertices[0][0], this.vertices[0][1]);
+                    this.ctx.closePath();
+                    this.ctx.fillStyle = "rgba(30,30,30," + a + ")";
+                    this.ctx.fill();
+
+                    this.cubed -= 0.4; // fade it out.
+                }
+
+                // draw the number
+                /*this.ctx.font = "bold 12px sans-serif";
+                 this.ctx.fillStyle = 'grey';
+                 this.ctx.fillText(this.num, this.x-10, this.y);
+                 this.ctx.fillText(bucket, this.x-10, this.y+15);*/
+
+            };
+
+            Polygon.prototype.drawHighlight = function() {
+                this.ctx.beginPath();
+                // draw the highlight
+                this.ctx.moveTo(this.vertices[0][0], this.vertices[0][1]);
+                // draw the polygon
+                for (var i = 0; i <= this.sides-1;i += 1) {
+                    this.ctx.lineTo (this.vertices[i][0], this.vertices[i][1]);
+                }
+                this.ctx.closePath();
+                var a = this.highlight/100;
+                this.ctx.strokeStyle =  "rgba(255, 255, 255, " + a + ")";
+                this.ctx.lineWidth = 1;
+                this.ctx.stroke();
+                this.highlight -= 0.5;
+            };
+
+            module.makePolygonArray = function() {
+                tiles = [];
+                var canvasWidth = canvas.width;
+                var canvasHeight = canvas.height;
+                var xStep = Math.round(Math.cos(Math.PI/6)*tileSize*2);
+                var yStep = Math.round(Math.cos(Math.PI/3)*tileSize + tileSize);
+                var xCoord = -xStep;
+                var yCoord = canvasHeight;
+                var i = 0;
+                while(yCoord > 0 - yStep) {
+                    if (xCoord > canvasWidth) {
+                        xCoord = (xCoord % xStep === 0) ? xStep/2 : 0;
+                        yCoord -= yStep;
+                    }
+                    else {
+                        xCoord += xStep;
+                    }
+                    tiles.push(new Polygon(6, xCoord, yCoord, tileSize, ctx, i));
+                    i += 1;
+                }
+            };
+
+            function Star(x, y, starSize, ctx) {
+                this.x = x;
+                this.y = y;
+                this.starSize = starSize;
+                this.ctx = ctx;
+                this.high = 0;
+            }
+
+            Star.prototype.drawStar = function() {
+
+                var radius = this.starSize * volume/4000 * Math.random();
+                if (radius > this.high) {
+                    this.high = radius;
+                } else {
+                    radius = this.high;
+                    if (this.high > 1) {
+                        this.high -= 0.25;
+                    }
+                }
+
+                var brightness = 150 + Math.round(radius * 5);
+                var a = this.starSize/5;
+
+                this.ctx.beginPath();
+                this.ctx.arc(this.x, this.y, radius, 0, 2 * Math.PI, false);
+                this.ctx.fillStyle = 'rgba(' + brightness + ', ' + brightness + ', ' + brightness + ', ' + a + ')';
+                this.ctx.fill();
+
+                // now move the star
+                if (this.y < 0) {
+                    var x = Math.random() * canvas.width;
+                    this.x = x;
+                    this.y = canvas.height;
+                } else {
+                    this.y -= Math.pow(this.starSize, 2)/150;
+                }
+            };
+
+            module.makeStarArray = function() {
+                var x, y, starSize;
+                stars = [];
+                var limit = canvas.width / 8; // how many stars?
+                for (var i = 0; i < limit; i ++) {
+                    x = Math.random() * canvas.width;
+                    y = Math.random() * canvas.height;
+                    starSize = (Math.random()+0.1)*5;
+                    stars.push(new Star(x, y, starSize, ctx));
+                }
+            };
+
+            module.drawBg = function() {
+                bgCtx.clearRect(0,0,canvas.width,canvas.height);
+                // save the unrotated context of the canvas so we can restore it later
+                // the alternative is to untranslate & unrotate after drawing
+                bgCtx.save();
+
+                // move to the center of the canvas
+                bgCtx.translate(canvas.width/2,canvas.height/2);
+
+                // rotate the canvas to the specified degrees
+                bgCtx.rotate(bgRotation*Math.PI/180);
+
+                // draw the image
+                // since the context is rotated, the image will be rotated also
+                bgCtx.drawImage(bgImg, -bgImg.width/2,-bgImg.height/2);
+
+                // we’re done with the rotating so restore the unrotated context
+                bgCtx.restore();
+
+                bgRotation += 0.03;
+            };
+
+            module.resizeCanvas = function() {
+                if (canvas) {
+                    // resize the foreground canvas
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    // resize the bg canvas
+                    bgCanvas.width = window.innerWidth;
+                    bgCanvas.height = window.innerHeight;
+                    module.drawBg();
+                    module.makePolygonArray();
+                    module.makeStarArray()
+                }
+            };
+
+            module.init = function(canvasId, size) {
+                canvas = document.getElementById(canvasId);
+                tileSize = size;
+                ctx = canvas.getContext("2d");
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                bgCanvas = document.getElementById("bg");
+                bgCtx = bgCanvas.getContext("2d");
+                bgImg.onload = function() {
+                    bgCtx.drawImage(bgImg, 0, 0);
+                };
+                bgImg.src = 'spacebg.jpg';
+
+                ctx.fillStyle = "rgb(0, 0, 0)";
+                ctx.rect(0, 0, canvas.width, canvas.height);
+                ctx.fill();
+
+                module.makePolygonArray();
+                module.makeStarArray();
+                module.draw();
+            };
+
+            module.draw = function() {
+                //ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+                //ctx.rect(0, 0, canvas.width, canvas.height);
+                //ctx.fill();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                stars.forEach(function(star) {
+                    star.drawStar();
+                });
+                tiles.forEach(function(tile) {
+                    tile.drawPolygon();
+                });
+                tiles.forEach(function(tile) {
+                    if (tile.highlight > 0) {
+                        tile.drawHighlight();
+                    }
+                });
+                requestAnimationFrame(module.draw);
+            };
+
+            setInterval(module.drawBg, 100);
+
+            return module;
+        })();
+
+        // resize the canvas to fill browser window dynamically
+        window.addEventListener('resize', visualizer.resizeCanvas, false);
+    </script>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            background-color: #000000;
+        }
+        #canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+        #bg {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body onload="">
+<canvas id="bg"></canvas>
+<canvas id="canvas" ></canvas>
+</body>
+</html>

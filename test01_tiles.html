@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script>
+        var danceFloor = (function() {
+            var module = {};
+            var tileSize;
+            var numBlocks;
+            var tiles = [];
+            var canvas;
+            var ctx;
+            var cycler = 0;
+            var gr = 0.618033988749895 // golden ratio
+
+            function Tile(x, y, freq, tileSize, ctx) {
+                this.tileSize = tileSize;
+                this.ctx = ctx;
+                this.x = x;
+                this.y = y;
+                this.freq = freq;
+            }
+            Tile.prototype.drawTile =  function() {
+                var freq = this.freq;
+                var r = Math.round(Math.sin(cycler*freq*gr)*127) + 128;
+                var g = Math.round(Math.sin(cycler*freq*gr+2)*127) + 128;
+                var b = Math.round(Math.sin(cycler*freq*gr+4)*127) + 128;
+
+                this.ctx.fillStyle = "rgb(" + r + ", " + g + ", " + b + ")";
+                this.ctx.fillRect (this.x, this.y, this.tileSize,  this.tileSize);
+            };
+
+            module.init = function(canvasId, size) {
+                canvas = document.getElementById(canvasId);
+                ctx = canvas.getContext("2d");
+                var canvasWidth = canvas.width;
+                var canvasHeight = canvas.height;
+                tileSize = size;
+                numBlocks = (canvasWidth*canvasHeight) / (tileSize*tileSize);
+                for(var x = 0; x < numBlocks; x += 1) {
+                    var xCoord = (x * tileSize) % canvasWidth;
+                    var yCoord = Math.floor(x/(canvasWidth / tileSize)) * tileSize;
+                    var freq = Math.random();
+                    tiles.push(new Tile(xCoord, yCoord, freq, tileSize, ctx));
+                }
+                module.draw();
+            };
+
+            module.draw = function() {
+                tiles.forEach(function(tile) {
+                    tile.drawTile();
+                });
+                cycler += 0.05;
+                requestAnimationFrame(module.draw);
+            };
+            return module;
+        })();
+    </script>
+    <style type="text/css">
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body onload="danceFloor.init('canvas', 40);">
+<canvas id="canvas" width="400" height="400"></canvas>
+</body>
+</html>
