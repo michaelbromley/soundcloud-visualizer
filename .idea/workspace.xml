@@ -2,15 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f9d9869-f1ee-427a-b28d-982c9ce8abbf" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/README.md" />
       <change type="DELETED" beforePath="E:\wamp\www\experiments\webAudio\.idea\.name" afterPath="" />
       <change type="DELETED" beforePath="E:\wamp\www\experiments\webAudio\.idea\encodings.xml" afterPath="" />
       <change type="DELETED" beforePath="E:\wamp\www\experiments\webAudio\.idea\misc.xml" afterPath="" />
       <change type="DELETED" beforePath="E:\wamp\www\experiments\webAudio\.idea\modules.xml" afterPath="" />
       <change type="DELETED" beforePath="E:\wamp\www\experiments\webAudio\.idea\vcs.xml" afterPath="" />
       <change type="DELETED" beforePath="E:\wamp\www\experiments\webAudio\.idea\webAudioCanvas.iml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MOVED" beforePath="E:\wamp\www\experiments\webAudio\readme.md" afterPath="$PROJECT_DIR$/README" />
     </list>
     <ignored path="webAudio.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -65,8 +64,8 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
+      <file leaf-file-name="README" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README">
           <provider editor-type-id="MarkdownPreviewEditor">
             <state />
           </provider>
@@ -353,7 +352,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
+    <entry file="file://$PROJECT_DIR$/README">
       <provider editor-type-id="MarkdownPreviewEditor">
         <state />
       </provider>
