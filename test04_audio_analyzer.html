@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script>
+        var canvas;
+        var ctx;
+        var audioContext;
+        var analyser;
+        var mic;
+
+        function init() {
+            canvas = document.getElementById('canvas');
+            ctx = canvas.getContext("2d");
+        }
+
+        navigator.getMedia = ( navigator.getUserMedia ||
+                navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia ||
+                navigator.msGetUserMedia);
+
+        navigator.getMedia ( { audio: true }, function (stream) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext);
+            mic = audioContext.createMediaStreamSource(stream);
+            analyser= audioContext.createAnalyser();
+            analyser.fftSize = 512;
+            mic.connect(analyser);
+            drawSpectrum();
+        });
+
+        function drawSpectrum() {
+            var WIDTH = canvas.width;
+            var HEIGHT= canvas.height;
+            var array =  new Uint8Array(256);
+            analyser.getByteFrequencyData(array);
+            ctx.clearRect(0, 0, WIDTH, HEIGHT);
+            for ( var i = 0; i < (array.length); i++ ){
+                var value = array[i];
+                ctx.fillRect(i*5,HEIGHT-value,3,HEIGHT);
+            }
+            requestAnimationFrame(drawSpectrum);
+        }
+
+    </script>
+    <style>
+        #canvas {
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body onload="init();">
+<canvas id="canvas" width="700"></canvas>
+</body>
+</html>
