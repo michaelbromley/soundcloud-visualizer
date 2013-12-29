@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="http://connect.soundcloud.com/sdk.js"></script>
+    <script>
+        function loadAndPlay(track_url) {
+
+            var client_id = "237d195ad90846f5e6294ade2e8cf87b";
+            var player = document.getElementById('player');
+            // permalink to a track
+            //var track_url = 'https://soundcloud.com/cocolo-studio/dj-funakoshi-q-ichirow';
+
+            SC.initialize({
+                client_id: client_id
+            });
+            SC.get('/resolve', { url: track_url }, function(track) {
+                SC.get('/tracks/' + track.id, {}, function(sound, error) {
+                    player.setAttribute('src', sound.stream_url + '?client_id=' + client_id);
+                    player.play();
+                });
+            });
+        }
+
+        function init() {
+            var submitButton = document.getElementById('submit');
+            submitButton.onclick = function() {
+                var track_url = document.getElementById('input').value;
+                loadAndPlay(track_url);
+            };
+        }
+    </script>
+    <style>
+        #input {
+            width: 450px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body onload="init();">
+<input id="input" placeholder="Paste Soundcloud URL here (https://soundcloud.com/artist/track)">
+<button id="submit">Load & Play</button><br>
+<audio id="player" controls=""></audio>
+</body>
+ </html>

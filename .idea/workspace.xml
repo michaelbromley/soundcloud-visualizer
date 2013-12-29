@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f9d9869-f1ee-427a-b28d-982c9ce8abbf" name="Default" comment="">
-      <change type="DELETED" beforePath="E:\wamp\www\experiments\webAudio\.idea\.name" afterPath="" />
-      <change type="DELETED" beforePath="E:\wamp\www\experiments\webAudio\.idea\encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="E:\wamp\www\experiments\webAudio\.idea\misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="E:\wamp\www\experiments\webAudio\.idea\modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="E:\wamp\www\experiments\webAudio\.idea\vcs.xml" afterPath="" />
-      <change type="DELETED" beforePath="E:\wamp\www\experiments\webAudio\.idea\webAudioCanvas.iml" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test11_embedded_audio.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test12_soundcloud_visualizer.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="E:\wamp\www\experiments\webAudio\readme.md" afterPath="$PROJECT_DIR$/README" />
     </list>
     <ignored path="webAudio.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,20 +32,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="polygons.txt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_PLUGINS_DIR$/scratches/polygons.txt">
+      <file leaf-file-name="test11_embedded_audio.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test11_embedded_audio.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="125" selection-end="125" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="272">
+            <state line="39" column="21" selection-start="1250" selection-end="1250" vertical-scroll-proportion="-24.846153" vertical-offset="17" max-vertical-offset="850">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+      <file leaf-file-name="test12_soundcloud_visualizer.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test12_soundcloud_visualizer.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="0" selection-start="20" selection-end="20" vertical-scroll-proportion="0.0254491" vertical-offset="0" max-vertical-offset="3808">
-              <folding />
+            <state line="379" column="28" selection-start="14880" selection-end="14880" vertical-scroll-proportion="0.89267015" vertical-offset="4130" max-vertical-offset="4743">
+              <folding>
+                <element signature="e#7366#8516#0" expanded="false" />
+                <element signature="e#8558#8791#0" expanded="false" />
+                <element signature="e#8833#10682#0" expanded="false" />
+                <element signature="e#10720#11104#0" expanded="false" />
+                <element signature="e#11135#11867#0" expanded="false" />
+                <element signature="e#12656#12749#0" expanded="false" />
+                <element signature="e#12778#13382#0" expanded="false" />
+                <element signature="tag#style#0;tag#head#0;tag#html#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -58,19 +62,7 @@
       <file leaf-file-name="test10_audio_hexagons_starfield_2.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test10_audio_hexagons_starfield_2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="202" column="19" selection-start="9287" selection-end="9287" vertical-scroll-proportion="-15.692307" vertical-offset="3026" max-vertical-offset="7344">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README">
-          <provider editor-type-id="MarkdownPreviewEditor">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="128" selection-start="189" selection-end="189" vertical-scroll-proportion="-1.9615384" vertical-offset="0" max-vertical-offset="153">
+            <state line="45" column="50" selection-start="1561" selection-end="1595" vertical-scroll-proportion="-20.923077" vertical-offset="221" max-vertical-offset="7344">
               <folding />
             </state>
           </provider>
@@ -84,7 +76,7 @@
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/WebAudioExperiment" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitLogSettings">
     <option name="myStructureFilterPaths" />
@@ -95,9 +87,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/test2 - polygons.html" />
-        <option value="$PROJECT_DIR$/test2 - hexagons.html" />
-        <option value="$PROJECT_DIR$/test2 - cubes.html" />
         <option value="$PROJECT_DIR$/test03_cubes.html" />
         <option value="$PROJECT_DIR$/test03_cubes_optimized.html" />
         <option value="$PROJECT_DIR$/test04_audio_analyzer.html" />
@@ -111,15 +100,17 @@
         <option value="$PROJECT_DIR$/test10_audio_hexagons_starfield_2.html" />
         <option value="$PROJECT_DIR$/readme.md" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/test11_embedded_video.html" />
+        <option value="$PROJECT_DIR$/test11_embedded_audio.html" />
+        <option value="$PROJECT_DIR$/test12_soundcloud_visualizer.html" />
       </list>
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1616" />
-    <option name="height" value="876" />
+    <option name="x" value="800" />
+    <option name="width" value="800" />
+    <option name="height" value="860" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -128,7 +119,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="2" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
@@ -147,18 +138,17 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="webAudioCanvas" />
+              <option name="myItemId" value="webAudio" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="webAudioCanvas" />
+              <option name="myItemId" value="webAudio" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -168,6 +158,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -177,8 +168,8 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="PublishConfig">
     <servers>
@@ -281,16 +272,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <frame x="800" y="0" width="800" height="860" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32916668" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.328125" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292683" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17181467" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.43951094" sideWeight="0.67083335" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44579947" sideWeight="0.67083335" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -304,6 +295,27 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32916668" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32963988" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292683" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17181467" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.44579947" sideWeight="0.67083335" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -320,6 +332,20 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$APPLICATION_PLUGINS_DIR$/scratches/polygons.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="0" selection-start="125" selection-end="125" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="272">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test10_audio_hexagons_starfield_2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="202" column="19" selection-start="9287" selection-end="9287" vertical-scroll-proportion="0.0" vertical-offset="3026" max-vertical-offset="7344">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="195" column="9" selection-start="3205" selection-end="3205" vertical-scroll-proportion="0.3328424" vertical-offset="3089" max-vertical-offset="15623" />
@@ -335,37 +361,58 @@
         <state line="1144" column="35" selection-start="19146" selection-end="19146" vertical-scroll-proportion="0.33333334" vertical-offset="19226" max-vertical-offset="36924" />
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_PLUGINS_DIR$/scratches/polygons.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="125" selection-end="125" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="272">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test10_audio_hexagons_starfield_2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="202" column="19" selection-start="9287" selection-end="9287" vertical-scroll-proportion="-15.692307" vertical-offset="3026" max-vertical-offset="7344">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README">
       <provider editor-type-id="MarkdownPreviewEditor">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="128" selection-start="189" selection-end="189" vertical-scroll-proportion="-1.9615384" vertical-offset="0" max-vertical-offset="153">
+        <state line="3" column="128" selection-start="189" selection-end="189" vertical-scroll-proportion="-1.9615384" vertical-offset="0" max-vertical-offset="153" />
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_PLUGINS_DIR$/scratches/polygons.txt">
+      <provider editor-type-id="com.intellij.persistence.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="0" selection-start="125" selection-end="125" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="272">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="20" selection-end="20" vertical-scroll-proportion="0.0254491" vertical-offset="0" max-vertical-offset="3808">
+        <state line="1" column="0" selection-start="20" selection-end="20" vertical-scroll-proportion="0.024531025" vertical-offset="0" max-vertical-offset="3808">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test11_embedded_audio.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="21" selection-start="1250" selection-end="1250" vertical-scroll-proportion="-24.846153" vertical-offset="17" max-vertical-offset="850">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test10_audio_hexagons_starfield_2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="50" selection-start="1561" selection-end="1595" vertical-scroll-proportion="-20.923077" vertical-offset="221" max-vertical-offset="7344">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test12_soundcloud_visualizer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="379" column="28" selection-start="14880" selection-end="14880" vertical-scroll-proportion="0.89267015" vertical-offset="4130" max-vertical-offset="4743">
+          <folding>
+            <element signature="e#7366#8516#0" expanded="false" />
+            <element signature="e#8558#8791#0" expanded="false" />
+            <element signature="e#8833#10682#0" expanded="false" />
+            <element signature="e#10720#11104#0" expanded="false" />
+            <element signature="e#11135#11867#0" expanded="false" />
+            <element signature="e#12656#12749#0" expanded="false" />
+            <element signature="e#12778#13382#0" expanded="false" />
+            <element signature="tag#style#0;tag#head#0;tag#html#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
