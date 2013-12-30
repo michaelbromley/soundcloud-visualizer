@@ -70,7 +70,7 @@ var Visualizer = function() {
         this.ctx = ctx;
         this.num = num; // the number of the tile, starting at 0
         this.high = 0; // the highest colour value, which then fades out
-        this.decay = this.num > 65 ? 0.1 : 2 // increase this value to fade out faster.
+        this.decay = this.num > 65 ? 0.1 : 2; // increase this value to fade out faster.
         this.highlight = 0; // for highlighted stroke effect;
         // figure out the x and y coordinates of the center of the polygon based on the
         // 60 degree XY axis coordinates passed in
@@ -92,17 +92,17 @@ var Visualizer = function() {
             this.vertices[i][0] = this.vertices[i][0] -  this.vertices[i][1] * Math.sin(fgRotation);
             this.vertices[i][1] = this.vertices[i][1] +  this.vertices[i][0] * Math.sin(fgRotation);
         }
-    }
+    };
     Polygon.prototype.calculateOffset = function(coords) {
         var angle = Math.atan(coords[1]/coords[0]);
         var distance = Math.sqrt(Math.pow(coords[0], 2) + Math.pow(coords[1], 2)); // a bit of pythagoras
-        var offsetFactor = Math.pow(distance/3, 2) * audioSource.volume/3000000 * Math.pow(this.high, 1.3)/300;
+        var offsetFactor = Math.pow(distance/3, 2.2) * audioSource.volume/2000000 * Math.pow(this.high, 1.2)/300;
         var offsetX = Math.cos(angle) * offsetFactor;
         var offsetY = Math.sin(angle) * offsetFactor;
         offsetX *= (coords[0] < 0) ? -1 : 1;
         offsetY *= (coords[0] < 0) ? -1 : 1;
         return [offsetX, offsetY];
-    }
+    };
     Polygon.prototype.drawPolygon = function() {
         var bucket = Math.ceil(audioSource.streamData.length/tiles.length*this.num);
         var val = Math.pow((audioSource.streamData[bucket]/255),2)*255;
@@ -293,7 +293,7 @@ var Visualizer = function() {
             fgCanvas.width = window.innerWidth;
             fgCanvas.height = window.innerHeight;
             fgCtx.translate(fgCanvas.width/2,fgCanvas.height/2);
-            tileSize = fgCanvas.width / 25;
+
             // resize the bg canvas
             bgCanvas.width = window.innerWidth;
             bgCanvas.height = window.innerHeight;
@@ -301,6 +301,8 @@ var Visualizer = function() {
             sfCanvas.width = window.innerWidth;
             sfCanvas.height = window.innerHeight;
             sfCtx.translate(fgCanvas.width/2,fgCanvas.height/2);
+
+            tileSize = fgCanvas.width > fgCanvas.height ? fgCanvas.width / 25 : fgCanvas.height / 25;
 
             drawBg();
             makePolygonArray();
@@ -355,9 +357,7 @@ var Visualizer = function() {
         bgImg.onload = function() {
             bgCtx.drawImage(bgImg, 0, 0);
         };
-        bgImg.src = options.bgImage;;
-
-        tileSize = fgCanvas.width / 25;
+        bgImg.src = options.bgImage;
 
         makePolygonArray();
         makeStarArray();
@@ -389,27 +389,6 @@ window.onload = function() {
     }
     body {
         background-color: #000000;
-    }
-    #canvas {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 10;
-    }
-    #bg {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-    }
-    #starfield {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 5;
     }
 </style>
 </head>
