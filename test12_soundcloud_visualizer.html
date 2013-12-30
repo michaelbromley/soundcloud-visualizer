@@ -2,6 +2,7 @@
 <html>
 <head>
 <title></title>
+<script src="http://connect.soundcloud.com/sdk.js"></script>
 <script>
 
 /**
@@ -70,7 +71,7 @@ var Visualizer = function() {
         this.ctx = ctx;
         this.num = num; // the number of the tile, starting at 0
         this.high = 0; // the highest colour value, which then fades out
-        this.decay = this.num > 65 ? 0.1 : 2; // increase this value to fade out faster.
+        this.decay = this.num > 42 ? 0.5 : 2; // increase this value to fade out faster.
         this.highlight = 0; // for highlighted stroke effect;
         // figure out the x and y coordinates of the center of the polygon based on the
         // 60 degree XY axis coordinates passed in
@@ -96,7 +97,7 @@ var Visualizer = function() {
     Polygon.prototype.calculateOffset = function(coords) {
         var angle = Math.atan(coords[1]/coords[0]);
         var distance = Math.sqrt(Math.pow(coords[0], 2) + Math.pow(coords[1], 2)); // a bit of pythagoras
-        var offsetFactor = Math.pow(distance/3, 2.2) * audioSource.volume/2000000 * Math.pow(this.high, 1.2)/300;
+        var offsetFactor = Math.pow(distance/3, 2) * audioSource.volume/2000000 * Math.pow(this.high, 1.3)/300;
         var offsetX = Math.cos(angle) * offsetFactor;
         var offsetY = Math.sin(angle) * offsetFactor;
         offsetX *= (coords[0] < 0) ? -1 : 1;
@@ -106,7 +107,7 @@ var Visualizer = function() {
     Polygon.prototype.drawPolygon = function() {
         var bucket = Math.ceil(audioSource.streamData.length/tiles.length*this.num);
         var val = Math.pow((audioSource.streamData[bucket]/255),2)*255;
-
+        val *= this.num > 42 ? 3 : 1;
         // establish the value for this tile
         if (val > this.high) {
             this.high = val;
@@ -163,6 +164,10 @@ var Visualizer = function() {
                 this.ctx.stroke();
             }
         }
+        // display the tile number for debug purposes
+        /*this.ctx.font = "bold 12px sans-serif";
+        this.ctx.fillStyle = 'grey';
+        this.ctx.fillText(this.num, this.vertices[0][0], this.vertices[0][1]);*/
     };
     Polygon.prototype.drawHighlight = function() {
         this.ctx.beginPath();
@@ -218,7 +223,7 @@ var Visualizer = function() {
         this.decay = 0.2 + Math.random() * 0.8;
     }
     Star.prototype.drawStar = function() {
-        var vol = Math.pow(Math.ceil(audioSource.volume/4500),1.5);
+        var vol = Math.pow(Math.ceil(audioSource.volume/3500),1.5);
         var radius = (this.starSize*2) * vol * Math.random();
         if (radius > this.high) {
             this.high = radius;
@@ -254,8 +259,6 @@ var Visualizer = function() {
             this.y = (Math.random() - 0.5) * fgCanvas.height/3;
             this.angle = Math.atan(Math.abs(this.y)/Math.abs(this.x));
         }
-        this.ctx.font = "bold 12px sans-serif";
-        this.ctx.fillStyle = 'grey';
     };
 
     var makeStarArray = function() {
@@ -287,7 +290,7 @@ var Visualizer = function() {
         bgRotation += 0.03;
     };
 
-    var resizeCanvas = function() {
+    this.resizeCanvas = function() {
         if (fgCanvas) {
             // resize the foreground canvas
             fgCanvas.width = window.innerWidth;
@@ -310,7 +313,7 @@ var Visualizer = function() {
         }
     };
 
-    rotateForeground = function() {
+    var rotateForeground = function() {
         tiles.forEach(function(tile) {
             tile.rotateVertices();
         });
@@ -367,19 +370,69 @@ var Visualizer = function() {
         setInterval(drawBg, 100);
         setInterval(rotateForeground, 50);
         // resize the canvas to fill browser window dynamically
-        window.addEventListener('resize', resizeCanvas, false);
+        window.addEventListener('resize', this.resizeCanvas, false);
+    };
+};
+
+var SoundCloudAudioSource = function(audioElement) {
+    var player = document.getElementById(audioElement);
+
+    var self = this;
+    this.volume = 0;
+    this.streamData = new Uint8Array(128);
+    var analyser;
+
+    var sampleAudioStream = function() {
+        analyser.getByteFrequencyData(self.streamData);
+        // calculate an overall volume value
+        var total = 0;
+        for(var i in self.streamData) {
+            total += self.streamData[i];
+        }
+        self.volume = total;
+    };
+
+    // get the input stream from the audio element
+
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext);
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 256;
+    var source = audioCtx.createMediaElementSource(player);
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
+    setInterval(sampleAudioStream, 20);
+
+    this.loadTrack = function(track_url) {
+        var client_id = "237d195ad90846f5e6294ade2e8cf87b";
+
+        SC.initialize({
+            client_id: client_id
+        });
+        SC.get('/resolve', { url: track_url }, function(track) {
+            SC.get('/tracks/' + track.id, {}, function(sound, error) {
+                player.setAttribute('src', sound.stream_url + '?client_id=' + client_id);
+                player.play();
+            });
+        });
     };
 };
 
 window.onload = function() {
     var visualizer = new Visualizer();
+    var audioSource = new SoundCloudAudioSource('player');
     visualizer.init(
             {
-                containerId: 'visulaizer',
-                audioSource: new AudioSource(),
+                containerId: 'visualizer',
+                audioSource: audioSource,
                 bgImage: 'spacebg.jpg'
             }
     );
+    visualizer.resizeCanvas();
+    var submitButton = document.getElementById('submit');
+    submitButton.onclick = function() {
+        var track_url = document.getElementById('input').value;
+        audioSource.loadTrack(track_url);
+    };
 };
 </script>
 <style type="text/css">
@@ -390,9 +443,19 @@ window.onload = function() {
     body {
         background-color: #000000;
     }
+    #controlPanel {
+        z-index: 50;
+        position: absolute;
+        bottom: 0px;
+    }
 </style>
 </head>
 <body>
-<div id="visulaizer"></div>
+<div id="visualizer"></div>
+<div id="controlPanel">
+    <input id="input" placeholder="Paste Soundcloud URL here (https://soundcloud.com/artist/track)">
+    <button id="submit">Load & Play</button><br>
+    <audio id="player" controls=""></audio>
+</div>
 </body>
 </html>
