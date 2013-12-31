@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f9d9869-f1ee-427a-b28d-982c9ce8abbf" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spacebg.jpg" afterPath="$PROJECT_DIR$/spacebg.jpg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test12_soundcloud_visualizer.html" afterPath="$PROJECT_DIR$/test12_soundcloud_visualizer.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -43,16 +44,15 @@
       <file leaf-file-name="test12_soundcloud_visualizer.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test12_soundcloud_visualizer.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="264" column="24" selection-start="11304" selection-end="11304" vertical-scroll-proportion="0.7051793" vertical-offset="1771" max-vertical-offset="4794">
+            <state line="249" column="29" selection-start="10547" selection-end="10547" vertical-scroll-proportion="0.55378485" vertical-offset="1592" max-vertical-offset="4862">
               <folding>
                 <element signature="e#468#1561#0" expanded="false" />
                 <element signature="e#4728#7466#0" expanded="false" />
                 <element signature="e#7517#8205#0" expanded="false" />
                 <element signature="e#8246#9396#0" expanded="false" />
-                <element signature="e#12725#13457#0" expanded="false" />
-                <element signature="e#13495#14270#0" expanded="false" />
-                <element signature="e#14311#14404#0" expanded="false" />
-                <element signature="e#15283#16479#0" expanded="false" />
+                <element signature="e#12673#13448#0" expanded="false" />
+                <element signature="e#13489#13582#0" expanded="false" />
+                <element signature="e#14461#15657#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -107,8 +107,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="963" />
-    <option name="width" value="957" />
+    <option name="x" value="960" />
+    <option name="width" value="960" />
     <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -145,8 +145,8 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PublishConfig">
     <servers>
@@ -258,11 +258,15 @@
       <created>1388422245001</created>
       <updated>1388422245001</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="experiments with different ways to visualize the starfield&#10;">
+      <created>1388477834142</created>
+      <updated>1388477834142</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="963" y="0" width="957" height="1040" extended-state="0" />
+    <frame x="960" y="0" width="960" height="1040" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33069977" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -303,9 +307,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17181467" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.44579947" sideWeight="0.67083335" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -318,7 +322,8 @@
     <MESSAGE value="started work on the soundcloud visualizer" />
     <MESSAGE value="made the tile size scale with regard to both height and width of window. &#10;tweaked the sensitivity of the visualizer slightly" />
     <MESSAGE value="got basic soundcloud integration working" />
-    <option name="LAST_COMMIT_MESSAGE" value="got basic soundcloud integration working" />
+    <MESSAGE value="experiments with different ways to visualize the starfield&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="experiments with different ways to visualize the starfield&#10;" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -335,10 +340,9 @@
             <element signature="e#4728#7466#0" expanded="false" />
             <element signature="e#7517#8205#0" expanded="false" />
             <element signature="e#8246#9396#0" expanded="false" />
-            <element signature="e#12725#13457#0" expanded="false" />
-            <element signature="e#13495#14270#0" expanded="false" />
-            <element signature="e#14311#14404#0" expanded="false" />
-            <element signature="e#15283#16479#0" expanded="false" />
+            <element signature="e#12673#13448#0" expanded="false" />
+            <element signature="e#13489#13582#0" expanded="false" />
+            <element signature="e#14461#15657#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -365,10 +369,9 @@
             <element signature="e#4728#7466#0" expanded="false" />
             <element signature="e#7517#8205#0" expanded="false" />
             <element signature="e#8246#9396#0" expanded="false" />
-            <element signature="e#12725#13457#0" expanded="false" />
-            <element signature="e#13495#14270#0" expanded="false" />
-            <element signature="e#14311#14404#0" expanded="false" />
-            <element signature="e#15283#16479#0" expanded="false" />
+            <element signature="e#12673#13448#0" expanded="false" />
+            <element signature="e#13489#13582#0" expanded="false" />
+            <element signature="e#14461#15657#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -408,11 +411,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="128" selection-start="189" selection-end="189" vertical-scroll-proportion="-1.9615384" vertical-offset="0" max-vertical-offset="153" />
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
       </provider>
     </entry>
     <entry file="file://$APPLICATION_PLUGINS_DIR$/scratches/polygons.txt">
@@ -444,16 +447,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test12_soundcloud_visualizer.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="264" column="24" selection-start="11304" selection-end="11304" vertical-scroll-proportion="0.7051793" vertical-offset="1771" max-vertical-offset="4794">
+        <state line="249" column="29" selection-start="10547" selection-end="10547" vertical-scroll-proportion="0.55378485" vertical-offset="1592" max-vertical-offset="4862">
           <folding>
             <element signature="e#468#1561#0" expanded="false" />
             <element signature="e#4728#7466#0" expanded="false" />
             <element signature="e#7517#8205#0" expanded="false" />
             <element signature="e#8246#9396#0" expanded="false" />
-            <element signature="e#12725#13457#0" expanded="false" />
-            <element signature="e#13495#14270#0" expanded="false" />
-            <element signature="e#14311#14404#0" expanded="false" />
-            <element signature="e#15283#16479#0" expanded="false" />
+            <element signature="e#12673#13448#0" expanded="false" />
+            <element signature="e#13489#13582#0" expanded="false" />
+            <element signature="e#14461#15657#0" expanded="false" />
           </folding>
         </state>
       </provider>
