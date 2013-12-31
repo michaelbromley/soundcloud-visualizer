@@ -71,7 +71,7 @@ var Visualizer = function() {
         this.ctx = ctx;
         this.num = num; // the number of the tile, starting at 0
         this.high = 0; // the highest colour value, which then fades out
-        this.decay = this.num > 42 ? 0.5 : 2; // increase this value to fade out faster.
+        this.decay = this.num > 42 ? 1.5 : 2; // increase this value to fade out faster.
         this.highlight = 0; // for highlighted stroke effect;
         // figure out the x and y coordinates of the center of the polygon based on the
         // 60 degree XY axis coordinates passed in
@@ -89,15 +89,21 @@ var Visualizer = function() {
     }
     Polygon.prototype.rotateVertices = function() {
         // rotate all the vertices to achieve the overall rotational effect
+        var rotation = fgRotation;
+        rotation -= audioSource.volume > 10000 ? Math.sin(audioSource.volume/500000) : 0;
         for (var i = 0; i <= this.sides-1;i += 1) {
-            this.vertices[i][0] = this.vertices[i][0] -  this.vertices[i][1] * Math.sin(fgRotation);
-            this.vertices[i][1] = this.vertices[i][1] +  this.vertices[i][0] * Math.sin(fgRotation);
+            this.vertices[i][0] = this.vertices[i][0] -  this.vertices[i][1] * Math.sin(rotation);
+            this.vertices[i][1] = this.vertices[i][1] +  this.vertices[i][0] * Math.sin(rotation);
         }
     };
+    var minMental = 0, maxMental = 0;
     Polygon.prototype.calculateOffset = function(coords) {
         var angle = Math.atan(coords[1]/coords[0]);
         var distance = Math.sqrt(Math.pow(coords[0], 2) + Math.pow(coords[1], 2)); // a bit of pythagoras
-        var offsetFactor = Math.pow(distance/3, 2) * audioSource.volume/2000000 * Math.pow(this.high, 1.3)/300;
+        var mentalFactor = Math.min(Math.max((Math.tan(audioSource.volume/6000) * 0.5), -20), 5); // this factor makes the visualization go crazy wild
+        /*minMental = mentalFactor < minMental ? mentalFactor : minMental;
+        maxMental = mentalFactor > maxMental ? mentalFactor : maxMental;*/
+        var offsetFactor = Math.pow(distance/3, 2) * (audioSource.volume/2000000) * (Math.pow(this.high, 1.3)/300) * mentalFactor;
         var offsetX = Math.cos(angle) * offsetFactor;
         var offsetY = Math.sin(angle) * offsetFactor;
         offsetX *= (coords[0] < 0) ? -1 : 1;
@@ -107,7 +113,7 @@ var Visualizer = function() {
     Polygon.prototype.drawPolygon = function() {
         var bucket = Math.ceil(audioSource.streamData.length/tiles.length*this.num);
         var val = Math.pow((audioSource.streamData[bucket]/255),2)*255;
-        val *= this.num > 42 ? 3 : 1;
+        val *= this.num > 42 ? 1.1 : 1;
         // establish the value for this tile
         if (val > this.high) {
             this.high = val;
@@ -131,7 +137,7 @@ var Visualizer = function() {
 
            if (val > 128) {
                 r = (val-128)*2;
-                g = Math.round((Math.cos((2*val/128*Math.PI/2)- 4*Math.PI/3)+1)*128);
+                g = ((Math.cos((2*val/128*Math.PI/2)- 4*Math.PI/3)+1)*128);
                 b = (val-105)*3;
             }
             else if (val > 175) {
@@ -140,9 +146,9 @@ var Visualizer = function() {
                 b = (val-105)*3;
             }
             else {
-                r = Math.round((Math.cos((2*val/128*Math.PI/2))+1)*128);
-                g = Math.round((Math.cos((2*val/128*Math.PI/2)- 4*Math.PI/3)+1)*128);
-                b = Math.round((Math.cos((2.4*val/128*Math.PI/2)- 2*Math.PI/3)+1)*128);
+                r = ((Math.cos((2*val/128*Math.PI/2))+1)*128);
+                g = ((Math.cos((2*val/128*Math.PI/2)- 4*Math.PI/3)+1)*128);
+                b = ((Math.cos((2.4*val/128*Math.PI/2)- 2*Math.PI/3)+1)*128);
             }
             if (val > 210) {
                 this.cubed = val; // add the cube effect if it's really loud
@@ -154,7 +160,11 @@ var Visualizer = function() {
             var e = 2.7182;
             a = (0.5/(1 + 40 * Math.pow(e, -val/8))) + (0.5/(1 + 40 * Math.pow(e, -val/20)));
 
-            this.ctx.fillStyle = "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
+            this.ctx.fillStyle = "rgba(" +
+                    Math.round(r) + ", " +
+                    Math.round(g) + ", " +
+                    Math.round(b) + ", " +
+                    a + ")";
             this.ctx.fill();
             // stroke
             if (val > 20) {
@@ -220,11 +230,13 @@ var Visualizer = function() {
         this.starSize = starSize;
         this.ctx = ctx;
         this.high = 0;
-        this.decay = 0.2 + Math.random() * 0.8;
+        this.speedBoost = 0;
+        this.decay = 0.7 + Math.random() * 0.8;
     }
     Star.prototype.drawStar = function() {
-        var vol = Math.pow(Math.ceil(audioSource.volume/3500),1.5);
-        var radius = (this.starSize*2) * vol * Math.random();
+        var distanceFromCentre = Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+        var vol = Math.pow(Math.ceil(audioSource.volume/3500),1.2);
+        var radius = 1 + (this.starSize) * vol * 2 * Math.random() * distanceFromCentre/1000;
         if (radius > this.high) {
             this.high = radius;
         } else {
@@ -234,22 +246,33 @@ var Visualizer = function() {
             }
         }
 
-        var brightness = 150 + Math.round(radius * 5);
+        var brightness = 200 + Math.min(Math.round(radius * 5), 55);
         var a = this.starSize/5;
 
-        var radgrad = this.ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, radius);
+        /*var radgrad = this.ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, radius);
         radgrad.addColorStop(0, 'rgba(' + brightness + ', ' + brightness + ', ' + brightness + ', ' + a + ')');
-        radgrad.addColorStop(0.5, 'rgba(' + brightness + ', ' + brightness + ', ' + brightness + ', ' + a/2 + ')');
+        radgrad.addColorStop(0.7, 'rgba(' + brightness + ', ' + brightness + ', ' + brightness + ', ' + a + ')');
+        radgrad.addColorStop(0.8, 'rgba(' + brightness + ', ' + brightness + ', ' + brightness + ', ' + a/2 + ')');
         radgrad.addColorStop(1, 'rgba(' + brightness + ', ' + brightness + ', ' + brightness + ', 0)');
 
         // draw shape
-        this.ctx.fillStyle = radgrad;
+        this.ctx.fillStyle = radgrad;*/
         //this.ctx.fillStyle = "white";
-        this.ctx.fillRect(this.x-radius*Math.PI/2,this.y-radius*Math.PI/2, radius*Math.PI, radius*Math.PI);
+        this.ctx.fillStyle = 'rgba(' + brightness + ', ' + brightness + ', ' + brightness + ', ' + a + ')';
+        //this.ctx.fillRect(this.x-radius*Math.PI/2,this.y-radius*Math.PI/2, radius*Math.PI, radius*Math.PI);
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, radius, 0, 2 * Math.PI, false);
+        this.ctx.fill();
 
         // starfield movement coming towards the camera
-        var dX = Math.cos(this.angle) * this.starSize/50;
-        var dY = Math.sin(this.angle) * this.starSize/50;
+       // var speed = Math.pow(radius, 3) * distanceFromCentre / 1000;
+        var speed = Math.pow(distanceFromCentre, 2)/1000000 * Math.pow(radius, 2);
+        if (speed > this.speedBoost) {
+            this.speedBoost = speed;
+        }
+        this.speedBoost = Math.max(this.speedBoost - 0.05, 1);
+        var dX = Math.cos(this.angle) * speed;
+        var dY = Math.sin(this.angle) * speed;
         this.x += this.x > 0 ? dX : -dX;
         this.y += this.y > 0 ? dY : -dY;
 
@@ -264,11 +287,11 @@ var Visualizer = function() {
     var makeStarArray = function() {
         var x, y, starSize;
         stars = [];
-        var limit = fgCanvas.width / 15; // how many stars?
+        var limit = fgCanvas.width / 25; // how many stars?
         for (var i = 0; i < limit; i ++) {
             x = (Math.random() - 0.5) * fgCanvas.width;
             y = (Math.random() - 0.5) * fgCanvas.height;
-            starSize = (Math.random()+0.1)*5;
+            starSize = (Math.random()+0.1)*3;
             stars.push(new Star(x, y, starSize, sfCtx));
         }
     };
@@ -334,8 +357,14 @@ var Visualizer = function() {
                     tile.drawHighlight();
                 }
             });
-            requestAnimationFrame(draw);
-        };
+
+        // debug
+       /* fgCtx.font = "bold 24px sans-serif";
+        fgCtx.fillStyle = 'grey';
+        fgCtx.fillText("minMental:" + minMental, 10, 10);
+        fgCtx.fillText("maxMental:" + maxMental, 10, 40);*/
+        requestAnimationFrame(draw);
+    };
 
     this.init = function(options) {
         audioSource = options.audioSource;
@@ -368,7 +397,7 @@ var Visualizer = function() {
 
 
         setInterval(drawBg, 100);
-        setInterval(rotateForeground, 50);
+        setInterval(rotateForeground, 20);
         // resize the canvas to fill browser window dynamically
         window.addEventListener('resize', this.resizeCanvas, false);
     };
