@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f9d9869-f1ee-427a-b28d-982c9ce8abbf" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spacebg.jpg" afterPath="$PROJECT_DIR$/spacebg.jpg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test12_soundcloud_visualizer.html" afterPath="$PROJECT_DIR$/test12_soundcloud_visualizer.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -44,15 +43,21 @@
       <file leaf-file-name="test12_soundcloud_visualizer.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test12_soundcloud_visualizer.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="249" column="29" selection-start="10547" selection-end="10547" vertical-scroll-proportion="0.55378485" vertical-offset="1592" max-vertical-offset="4862">
+            <state line="289" column="20" selection-start="12069" selection-end="12069" vertical-scroll-proportion="0.19814241" vertical-offset="2197" max-vertical-offset="4148">
               <folding>
                 <element signature="e#468#1561#0" expanded="false" />
-                <element signature="e#4728#7466#0" expanded="false" />
-                <element signature="e#7517#8205#0" expanded="false" />
-                <element signature="e#8246#9396#0" expanded="false" />
-                <element signature="e#12673#13448#0" expanded="false" />
-                <element signature="e#13489#13582#0" expanded="false" />
-                <element signature="e#14461#15657#0" expanded="false" />
+                <element signature="e#2115#3180#0" expanded="false" />
+                <element signature="e#3231#3699#0" expanded="false" />
+                <element signature="e#3796#4626#0" expanded="false" />
+                <element signature="e#7464#8152#0" expanded="false" />
+                <element signature="e#8193#9343#0" expanded="false" />
+                <element signature="e#9385#9570#0" expanded="false" />
+                <element signature="e#9612#11397#0" expanded="false" />
+                <element signature="e#13118#13893#0" expanded="false" />
+                <element signature="e#13934#14027#0" expanded="false" />
+                <element signature="e#14056#14869#0" expanded="false" />
+                <element signature="e#16033#17421#0" expanded="false" />
+                <element signature="e#16235#16580#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -107,9 +112,9 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="960" />
-    <option name="width" value="960" />
-    <option name="height" value="1040" />
+    <option name="x" value="797" />
+    <option name="width" value="803" />
+    <option name="height" value="860" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -262,14 +267,19 @@
       <created>1388477834142</created>
       <updated>1388477834142</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="starfield now visulaized as lines rather than circles or squares.">
+      <created>1388505514560</created>
+      <updated>1388505514560</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="960" y="0" width="960" height="1040" extended-state="0" />
+    <frame x="797" y="0" width="803" height="860" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33069977" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295711" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4119318" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292683" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -285,7 +295,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32963988" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295711" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -323,7 +332,8 @@
     <MESSAGE value="made the tile size scale with regard to both height and width of window. &#10;tweaked the sensitivity of the visualizer slightly" />
     <MESSAGE value="got basic soundcloud integration working" />
     <MESSAGE value="experiments with different ways to visualize the starfield&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="experiments with different ways to visualize the starfield&#10;" />
+    <MESSAGE value="starfield now visulaized as lines rather than circles or squares." />
+    <option name="LAST_COMMIT_MESSAGE" value="starfield now visulaized as lines rather than circles or squares." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -337,12 +347,18 @@
         <state line="112" column="3" selection-start="4455" selection-end="4455" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4420">
           <folding>
             <element signature="e#468#1561#0" expanded="false" />
-            <element signature="e#4728#7466#0" expanded="false" />
-            <element signature="e#7517#8205#0" expanded="false" />
-            <element signature="e#8246#9396#0" expanded="false" />
-            <element signature="e#12673#13448#0" expanded="false" />
-            <element signature="e#13489#13582#0" expanded="false" />
-            <element signature="e#14461#15657#0" expanded="false" />
+            <element signature="e#2115#3180#0" expanded="false" />
+            <element signature="e#3231#3699#0" expanded="false" />
+            <element signature="e#3796#4626#0" expanded="false" />
+            <element signature="e#7464#8152#0" expanded="false" />
+            <element signature="e#8193#9343#0" expanded="false" />
+            <element signature="e#9385#9570#0" expanded="false" />
+            <element signature="e#9612#11397#0" expanded="false" />
+            <element signature="e#13118#13893#0" expanded="false" />
+            <element signature="e#13934#14027#0" expanded="false" />
+            <element signature="e#14056#14869#0" expanded="false" />
+            <element signature="e#16033#17421#0" expanded="false" />
+            <element signature="e#16235#16580#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -366,12 +382,18 @@
         <state line="112" column="3" selection-start="4455" selection-end="4455" vertical-scroll-proportion="0.0" vertical-offset="1904" max-vertical-offset="4420">
           <folding>
             <element signature="e#468#1561#0" expanded="false" />
-            <element signature="e#4728#7466#0" expanded="false" />
-            <element signature="e#7517#8205#0" expanded="false" />
-            <element signature="e#8246#9396#0" expanded="false" />
-            <element signature="e#12673#13448#0" expanded="false" />
-            <element signature="e#13489#13582#0" expanded="false" />
-            <element signature="e#14461#15657#0" expanded="false" />
+            <element signature="e#2115#3180#0" expanded="false" />
+            <element signature="e#3231#3699#0" expanded="false" />
+            <element signature="e#3796#4626#0" expanded="false" />
+            <element signature="e#7464#8152#0" expanded="false" />
+            <element signature="e#8193#9343#0" expanded="false" />
+            <element signature="e#9385#9570#0" expanded="false" />
+            <element signature="e#9612#11397#0" expanded="false" />
+            <element signature="e#13118#13893#0" expanded="false" />
+            <element signature="e#13934#14027#0" expanded="false" />
+            <element signature="e#14056#14869#0" expanded="false" />
+            <element signature="e#16033#17421#0" expanded="false" />
+            <element signature="e#16235#16580#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -447,15 +469,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test12_soundcloud_visualizer.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="249" column="29" selection-start="10547" selection-end="10547" vertical-scroll-proportion="0.55378485" vertical-offset="1592" max-vertical-offset="4862">
+        <state line="289" column="20" selection-start="12069" selection-end="12069" vertical-scroll-proportion="0.19814241" vertical-offset="2197" max-vertical-offset="4148">
           <folding>
             <element signature="e#468#1561#0" expanded="false" />
-            <element signature="e#4728#7466#0" expanded="false" />
-            <element signature="e#7517#8205#0" expanded="false" />
-            <element signature="e#8246#9396#0" expanded="false" />
-            <element signature="e#12673#13448#0" expanded="false" />
-            <element signature="e#13489#13582#0" expanded="false" />
-            <element signature="e#14461#15657#0" expanded="false" />
+            <element signature="e#2115#3180#0" expanded="false" />
+            <element signature="e#3231#3699#0" expanded="false" />
+            <element signature="e#3796#4626#0" expanded="false" />
+            <element signature="e#7464#8152#0" expanded="false" />
+            <element signature="e#8193#9343#0" expanded="false" />
+            <element signature="e#9385#9570#0" expanded="false" />
+            <element signature="e#9612#11397#0" expanded="false" />
+            <element signature="e#13118#13893#0" expanded="false" />
+            <element signature="e#13934#14027#0" expanded="false" />
+            <element signature="e#14056#14869#0" expanded="false" />
+            <element signature="e#16033#17421#0" expanded="false" />
+            <element signature="e#16235#16580#0" expanded="false" />
           </folding>
         </state>
       </provider>

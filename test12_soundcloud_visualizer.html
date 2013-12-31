@@ -59,11 +59,9 @@ var Visualizer = function() {
     var fgRotation = 0.001;
     var bgCanvas;
     var bgCtx;
-    var bgRotation = 0;
     var sfCanvas;
     var sfCtx;
     var audioSource;
-    var bgImg = new Image();
 
     function Polygon(sides, x, y, tileSize, ctx, num) {
         this.sides = sides;
@@ -273,7 +271,7 @@ var Visualizer = function() {
     var makeStarArray = function() {
         var x, y, starSize;
         stars = [];
-        var limit = fgCanvas.width / 25; // how many stars?
+        var limit = fgCanvas.width / 15; // how many stars?
         for (var i = 0; i < limit; i ++) {
             x = (Math.random() - 0.5) * fgCanvas.width;
             y = (Math.random() - 0.5) * fgCanvas.height;
@@ -282,21 +280,35 @@ var Visualizer = function() {
         }
     };
 
+
     var drawBg = function() {
-        bgCtx.clearRect(0,0,fgCanvas.width,fgCanvas.height);
-        // save the unrotated context of the canvas so we can restore it later
-        // the alternative is to untranslate & unrotate after drawing
-        bgCtx.save();
-        // move to the center of the canvas
-        bgCtx.translate(fgCanvas.width/2,fgCanvas.height/2);
-        // rotate the canvas to the specified degrees
-        bgCtx.rotate(bgRotation*Math.PI/180);
-        // draw the image
-        // since the context is rotated, the image will be rotated also
-        bgCtx.drawImage(bgImg, -bgImg.width/2,-bgImg.height/2);
-        // we’re done with the rotating so restore the unrotated context
-        bgCtx.restore();
-        bgRotation += 0.03;
+        bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+        var r, g, b, a;
+        var val = audioSource.volume/1000;
+        r = 200 + (Math.sin(val) + 1) * 28;
+        g = val * 2;
+        b = val * 8;
+        a = Math.sin(val+3*Math.PI/2) + 1;
+        bgCtx.beginPath();
+        bgCtx.rect(0, 0, bgCanvas.width, bgCanvas.height);
+        // create radial gradient
+        var grd = bgCtx.createRadialGradient(bgCanvas.width/2, bgCanvas.height/2, val, bgCanvas.width/2, bgCanvas.height/2, bgCanvas.width-Math.min(Math.pow(val, 2.7), bgCanvas.width - 20));
+        grd.addColorStop(0, 'rgba(0,0,0,0)');// centre is transparent black
+        grd.addColorStop(0.8, "rgba(" +
+                 Math.round(r) + ", " +
+                 Math.round(g) + ", " +
+                 Math.round(b) + ", 0.4)"); // edges are reddish
+
+        bgCtx.fillStyle = grd;
+        bgCtx.fill();
+        /*bgRotation += 0.03;
+        bgCtx.font = "bold 30px sans-serif";
+        bgCtx.fillStyle = 'grey';
+        bgCtx.fillText("val: " + val, 30, 30);
+        bgCtx.fillText("r: " + r , 30, 60);
+        bgCtx.fillText("g: " + g , 30, 90);
+        bgCtx.fillText("b: " + b , 30, 120);
+        bgCtx.fillText("a: " + a , 30, 150);*/
     };
 
     this.resizeCanvas = function() {
@@ -372,10 +384,6 @@ var Visualizer = function() {
         bgCanvas = document.createElement('canvas');
         bgCtx = bgCanvas.getContext("2d");
         container.appendChild(bgCanvas);
-        bgImg.onload = function() {
-            bgCtx.drawImage(bgImg, 0, 0);
-        };
-        bgImg.src = options.bgImage;
 
         makePolygonArray();
         makeStarArray();
@@ -441,8 +449,7 @@ window.onload = function() {
     visualizer.init(
             {
                 containerId: 'visualizer',
-                audioSource: audioSource,
-                bgImage: 'spacebg.jpg'
+                audioSource: audioSource
             }
     );
     visualizer.resizeCanvas();
