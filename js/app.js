@@ -7,6 +7,8 @@
  * which samples the input and turns it into an FFT array. The object has two properties:
  * streamData - this is the Uint8Array containing the FFT data
  * volume - cumulative value of all the bins of the streaData.
+ *
+ * The MicrophoneAudioSource uses the getUserMedia interface to get real-time data from the user's microphone. Not used currently but included for possible future use.
  */
 var MicrophoneAudioSource = function() {
     var self = this;
@@ -67,16 +69,12 @@ var SoundCloudAudioSource = function(audioElement) {
     this.playStream = function(streamUrl) {
         // get the input stream from the audio element
         player.setAttribute('src', streamUrl);
-        /*var source = document.createElement('source');
-        source.setAttribute('src', streamUrl);
-        source.setAttribute('type', 'audio/ogg');
-        player.appendChild(source);*/
         player.play();
     }
 };
 /**
  * The Visualizer object, after being instantiated, must be initialized with the init() method,
- * which takes an options object specifying the canvases to work on and the audiosource which will
+ * which takes an options object specifying the element to append the canvases to and the audiosource which will
  * provide the data to be visualized.
  */
 var Visualizer = function() {
@@ -129,7 +127,9 @@ var Visualizer = function() {
         var angle = Math.atan(coords[1]/coords[0]);
         var distance = Math.sqrt(Math.pow(coords[0], 2) + Math.pow(coords[1], 2)); // a bit of pythagoras
         var mentalFactor = Math.min(Math.max((Math.tan(audioSource.volume/6000) * 0.5), -20), 2); // this factor makes the visualization go crazy wild
-        /*minMental = mentalFactor < minMental ? mentalFactor : minMental;
+        /*
+        // debug
+        minMental = mentalFactor < minMental ? mentalFactor : minMental;
          maxMental = mentalFactor > maxMental ? mentalFactor : maxMental;*/
         var offsetFactor = Math.pow(distance/3, 2) * (audioSource.volume/2000000) * (Math.pow(this.high, 1.3)/300) * mentalFactor;
         var offsetX = Math.cos(angle) * offsetFactor;
@@ -331,7 +331,8 @@ var Visualizer = function() {
 
         bgCtx.fillStyle = grd;
         bgCtx.fill();
-        /*bgRotation += 0.03;
+        /*
+         // debug data
          bgCtx.font = "bold 30px sans-serif";
          bgCtx.fillStyle = 'grey';
          bgCtx.fillText("val: " + val, 30, 30);
@@ -434,7 +435,7 @@ var Visualizer = function() {
  */
 var SoundcloudLoader = function() {
     var self = this;
-    var client_id = "237d195ad90846f5e6294ade2e8cf87b";
+    var client_id = "YOUR_SOUNDCLOUD_CLIENT_ID"; // to get an ID go to http://developers.soundcloud.com/
     this.sound = {};
     this.streamUrl = "";
     this.errorMessage = "";
@@ -585,7 +586,7 @@ window.onload = function init() {
     aboutButton.addEventListener('click', function(e) {
         e.preventDefault();
         var message = 'Soundcloud visualizer: a canvas and webaudio API experiment by <a href="http://www.michaelbromley.co.uk">Michael Bromley</a>.<br>' +
-            'For more information, visit the project\'s <a href="https://github.com/michaelbromley/webAudio">Github page</a>';
+            'For more information, visit the project\'s <a href="https://github.com/michaelbromley/soundcloud-visualizer">Github page</a>';
         uiUpdater.displayMessage("About", message);
     });
 };

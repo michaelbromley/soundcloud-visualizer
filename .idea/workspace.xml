@@ -57,32 +57,33 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="6" selection-start="882" selection-end="882" vertical-scroll-proportion="-14.538462" vertical-offset="13" max-vertical-offset="680">
+            <state line="28" column="86" selection-start="1087" selection-end="1087" vertical-scroll-proportion="-17.807692" vertical-offset="13" max-vertical-offset="680">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider editor-type-id="MarkdownPreviewEditor">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="135" selection-start="2608" selection-end="2608" vertical-scroll-proportion="0.79204893" vertical-offset="145" max-vertical-offset="799">
+            <state line="42" column="66" selection-start="2861" selection-end="2861" vertical-scroll-proportion="-27.461538" vertical-offset="0" max-vertical-offset="850">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="562" column="7" selection-start="22154" selection-end="22154" vertical-scroll-proportion="-7.52" vertical-offset="7734" max-vertical-offset="8500">
+            <state line="76" column="81" selection-start="2935" selection-end="2935" vertical-scroll-proportion="-10.8351145" vertical-offset="7386" max-vertical-offset="8041">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <element signature="e#406#1467#0" expanded="false" />
-                <element signature="e#18672#21314#0" expanded="false" />
+                <element signature="e#577#1638#0" expanded="false" />
+                <element signature="e#1692#2752#0" expanded="false" />
+                <element signature="e#18744#21386#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -91,7 +92,7 @@
       <file leaf-file-name="scratch1.txt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$APPLICATION_PLUGINS_DIR$/scratches/scratch1.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="38" selection-start="668" selection-end="668" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1139">
+            <state line="0" column="45" selection-start="45" selection-end="45" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1173">
               <folding />
             </state>
           </provider>
@@ -127,11 +128,11 @@
         <option value="$PROJECT_DIR$/test11_embedded_audio.html" />
         <option value="$PROJECT_DIR$/test12_soundcloud_visualizer.html" />
         <option value="$PROJECT_DIR$/css/normalize.css" />
-        <option value="$APPLICATION_PLUGINS_DIR$/scratches/scratch1.txt" />
         <option value="$PROJECT_DIR$/css/style.css" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/js/app.js" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$APPLICATION_PLUGINS_DIR$/scratches/scratch1.txt" />
+        <option value="$PROJECT_DIR$/js/app.js" />
       </list>
     </option>
   </component>
@@ -492,13 +493,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_PLUGINS_DIR$/scratches/scratch1.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="38" selection-start="668" selection-end="668" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1139">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="52" column="12" selection-start="6383" selection-end="6383" vertical-scroll-proportion="0.0" vertical-offset="576" max-vertical-offset="3349">
@@ -511,19 +505,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="6" selection-start="882" selection-end="882" vertical-scroll-proportion="-14.538462" vertical-offset="13" max-vertical-offset="680">
+        <state line="28" column="86" selection-start="1087" selection-end="1087" vertical-scroll-proportion="-17.807692" vertical-offset="13" max-vertical-offset="680">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="562" column="7" selection-start="22154" selection-end="22154" vertical-scroll-proportion="-7.52" vertical-offset="7734" max-vertical-offset="8500">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#406#1467#0" expanded="false" />
-            <element signature="e#18672#21314#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -532,8 +515,27 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="135" selection-start="2608" selection-end="2608" vertical-scroll-proportion="0.79204893" vertical-offset="145" max-vertical-offset="799">
+        <state line="42" column="66" selection-start="2861" selection-end="2861" vertical-scroll-proportion="-27.461538" vertical-offset="0" max-vertical-offset="850">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_PLUGINS_DIR$/scratches/scratch1.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="45" selection-start="45" selection-end="45" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1173">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="76" column="81" selection-start="2935" selection-end="2935" vertical-scroll-proportion="-10.8351145" vertical-offset="7386" max-vertical-offset="8041">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#577#1638#0" expanded="false" />
+            <element signature="e#1692#2752#0" expanded="false" />
+            <element signature="e#18744#21386#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
