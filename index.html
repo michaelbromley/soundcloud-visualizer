@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Soundcloud Visualizer by Michael Bromley</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="visualizer"></div>
+<div id="controlPanel" class="hidden">
+    <div id="tab"><a href="#" id="toggleButton"><i class="icon-menu"></i></a></div>
+    <div id="trackInfoPanel" class="hidden">
+        <img id="infoImage" src="">
+        <div id="infoArtist"></div>
+        <div id="infoTrack"></div>
+    </div>
+    <div id="playerControls">
+        <form id="form">
+            <input id="input" placeholder="Paste Soundcloud URL here (https://soundcloud.com/artist/track)">
+            <button type="submit" id="submit"><i class="icon-play"></i></button><br>
+        </form>
+        <audio id="player" controls="" autoplay=""></audio>
+    </div>
+</div>
+<footer>
+    <span id="credit">Soundcloud visualizer: a canvas and webaudio API experiment by <a href="http://www.michaelbromley.co.uk">Michael Bromley</a>.</span>
+    <span id="github"><a href="https://github.com/michaelbromley/webAudio"><i class="icon-github"></i> Source on Github</a></span>
+    <span id="scLogo"><a href="http://soundcloud.com/"><img src="assets/powered_by_white.png"></a></span>
+</footer>
+<script src="http://connect.soundcloud.com/sdk.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

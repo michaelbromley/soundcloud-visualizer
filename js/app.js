@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title></title>
-<script src="http://connect.soundcloud.com/sdk.js"></script>
-<script>
+/**
+ * Created by Michael on 31/12/13.
+ */
 
 /**
- * The AudioSource object creates an analyzer node, sets up a repeating function with setInterval
+ * The *AudioSource object creates an analyzer node, sets up a repeating function with setInterval
  * which samples the input and turns it into an FFT array. The object has two properties:
  * streamData - this is the Uint8Array containing the FFT data
  * volume - cumulative value of all the bins of the streaData.
  */
-var AudioSource = function() {
+var MicrophoneAudioSource = function() {
     var self = this;
     this.volume = 0;
     this.streamData = new Uint8Array(128);
@@ -29,11 +26,11 @@ var AudioSource = function() {
 
     // get the input stream from the microphone
     navigator.getMedia = (
-            navigator.getUserMedia ||
-                    navigator.webkitGetUserMedia ||
-                    navigator.mozGetUserMedia ||
-                    navigator.msGetUserMedia
-            );
+        navigator.getUserMedia ||
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia ||
+            navigator.msGetUserMedia
+        );
     navigator.getMedia ( { audio: true }, function (stream) {
         var audioCtx = new (window.AudioContext || window.webkitAudioContext);
         var mic = audioCtx.createMediaStreamSource(stream);
@@ -43,7 +40,35 @@ var AudioSource = function() {
         setInterval(sampleAudioStream, 20);
     }, function(){ alert("error getting microphone input."); });
 };
-
+var SoundCloudAudioSource = function(audioElement) {
+    var player = document.getElementById(audioElement);
+    var self = this;
+    var analyser;
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext);
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 256;
+    var source = audioCtx.createMediaElementSource(player);
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
+    var sampleAudioStream = function() {
+        analyser.getByteFrequencyData(self.streamData);
+        // calculate an overall volume value
+        var total = 0;
+        for (var i = 0; i < 80; i++) { // get the volume from the first 80 bins, else it gets too loud with treble
+            total += self.streamData[i];
+        }
+        self.volume = total;
+    };
+    setInterval(sampleAudioStream, 20);
+    // public properties and methods
+    this.volume = 0;
+    this.streamData = new Uint8Array(128);
+    this.playStream = function(streamUrl) {
+        // get the input stream from the audio element
+        player.setAttribute('src', streamUrl);
+        player.play();
+    }
+};
 /**
  * The Visualizer object, after being instantiated, must be initialized with the init() method,
  * which takes an options object specifying the canvases to work on and the audiosource which will
@@ -100,7 +125,7 @@ var Visualizer = function() {
         var distance = Math.sqrt(Math.pow(coords[0], 2) + Math.pow(coords[1], 2)); // a bit of pythagoras
         var mentalFactor = Math.min(Math.max((Math.tan(audioSource.volume/6000) * 0.5), -20), 2); // this factor makes the visualization go crazy wild
         /*minMental = mentalFactor < minMental ? mentalFactor : minMental;
-        maxMental = mentalFactor > maxMental ? mentalFactor : maxMental;*/
+         maxMental = mentalFactor > maxMental ? mentalFactor : maxMental;*/
         var offsetFactor = Math.pow(distance/3, 2) * (audioSource.volume/2000000) * (Math.pow(this.high, 1.3)/300) * mentalFactor;
         var offsetX = Math.cos(angle) * offsetFactor;
         var offsetY = Math.sin(angle) * offsetFactor;
@@ -133,7 +158,7 @@ var Visualizer = function() {
             }
             this.ctx.closePath();
 
-           if (val > 128) {
+            if (val > 128) {
                 r = (val-128)*2;
                 g = ((Math.cos((2*val/128*Math.PI/2)- 4*Math.PI/3)+1)*128);
                 b = (val-105)*3;
@@ -159,10 +184,10 @@ var Visualizer = function() {
             a = (0.5/(1 + 40 * Math.pow(e, -val/8))) + (0.5/(1 + 40 * Math.pow(e, -val/20)));
 
             this.ctx.fillStyle = "rgba(" +
-                    Math.round(r) + ", " +
-                    Math.round(g) + ", " +
-                    Math.round(b) + ", " +
-                    a + ")";
+                Math.round(r) + ", " +
+                Math.round(g) + ", " +
+                Math.round(b) + ", " +
+                a + ")";
             this.ctx.fill();
             // stroke
             if (val > 20) {
@@ -174,8 +199,8 @@ var Visualizer = function() {
         }
         // display the tile number for debug purposes
         /*this.ctx.font = "bold 12px sans-serif";
-        this.ctx.fillStyle = 'grey';
-        this.ctx.fillText(this.num, this.vertices[0][0], this.vertices[0][1]);*/
+         this.ctx.fillStyle = 'grey';
+         this.ctx.fillText(this.num, this.vertices[0][0], this.vertices[0][1]);*/
     };
     Polygon.prototype.drawHighlight = function() {
         this.ctx.beginPath();
@@ -295,20 +320,20 @@ var Visualizer = function() {
         var grd = bgCtx.createRadialGradient(bgCanvas.width/2, bgCanvas.height/2, val, bgCanvas.width/2, bgCanvas.height/2, bgCanvas.width-Math.min(Math.pow(val, 2.7), bgCanvas.width - 20));
         grd.addColorStop(0, 'rgba(0,0,0,0)');// centre is transparent black
         grd.addColorStop(0.8, "rgba(" +
-                 Math.round(r) + ", " +
-                 Math.round(g) + ", " +
-                 Math.round(b) + ", 0.4)"); // edges are reddish
+            Math.round(r) + ", " +
+            Math.round(g) + ", " +
+            Math.round(b) + ", 0.4)"); // edges are reddish
 
         bgCtx.fillStyle = grd;
         bgCtx.fill();
         /*bgRotation += 0.03;
-        bgCtx.font = "bold 30px sans-serif";
-        bgCtx.fillStyle = 'grey';
-        bgCtx.fillText("val: " + val, 30, 30);
-        bgCtx.fillText("r: " + r , 30, 60);
-        bgCtx.fillText("g: " + g , 30, 90);
-        bgCtx.fillText("b: " + b , 30, 120);
-        bgCtx.fillText("a: " + a , 30, 150);*/
+         bgCtx.font = "bold 30px sans-serif";
+         bgCtx.fillStyle = 'grey';
+         bgCtx.fillText("val: " + val, 30, 30);
+         bgCtx.fillText("r: " + r , 30, 60);
+         bgCtx.fillText("g: " + g , 30, 90);
+         bgCtx.fillText("b: " + b , 30, 120);
+         bgCtx.fillText("a: " + a , 30, 150);*/
     };
 
     this.resizeCanvas = function() {
@@ -341,26 +366,26 @@ var Visualizer = function() {
     };
 
     var draw = function() {
-            fgCtx.clearRect(-fgCanvas.width, -fgCanvas.height, fgCanvas.width*2, fgCanvas.height *2);
-            sfCtx.clearRect(-fgCanvas.width/2, -fgCanvas.height/2, fgCanvas.width, fgCanvas.height);
+        fgCtx.clearRect(-fgCanvas.width, -fgCanvas.height, fgCanvas.width*2, fgCanvas.height *2);
+        sfCtx.clearRect(-fgCanvas.width/2, -fgCanvas.height/2, fgCanvas.width, fgCanvas.height);
 
-            stars.forEach(function(star) {
-                star.drawStar();
-            });
-            tiles.forEach(function(tile) {
-                tile.drawPolygon();
-            });
-            tiles.forEach(function(tile) {
-                if (tile.highlight > 0) {
-                    tile.drawHighlight();
-                }
-            });
+        stars.forEach(function(star) {
+            star.drawStar();
+        });
+        tiles.forEach(function(tile) {
+            tile.drawPolygon();
+        });
+        tiles.forEach(function(tile) {
+            if (tile.highlight > 0) {
+                tile.drawHighlight();
+            }
+        });
 
         // debug
-       /* fgCtx.font = "bold 24px sans-serif";
-        fgCtx.fillStyle = 'grey';
-        fgCtx.fillText("minMental:" + minMental, 10, 10);
-        fgCtx.fillText("maxMental:" + maxMental, 10, 40);*/
+        /* fgCtx.font = "bold 24px sans-serif";
+         fgCtx.fillStyle = 'grey';
+         fgCtx.fillText("minMental:" + minMental, 10, 10);
+         fgCtx.fillText("maxMental:" + maxMental, 10, 40);*/
         requestAnimationFrame(draw);
     };
 
@@ -387,6 +412,8 @@ var Visualizer = function() {
 
         makePolygonArray();
         makeStarArray();
+
+        this.resizeCanvas();
         draw();
 
 
@@ -397,90 +424,116 @@ var Visualizer = function() {
     };
 };
 
-var SoundCloudAudioSource = function(audioElement) {
-    var player = document.getElementById(audioElement);
-
+/**
+ * Makes a request to the Soundcloud API and returns the JSON data.
+ */
+var SoundcloudLoader = function() {
     var self = this;
-    this.volume = 0;
-    this.streamData = new Uint8Array(128);
-    var analyser;
+    var client_id = "237d195ad90846f5e6294ade2e8cf87b";
+    this.sound = {};
+    this.streamUrl = "";
 
-    var sampleAudioStream = function() {
-        analyser.getByteFrequencyData(self.streamData);
-        // calculate an overall volume value
-        var total = 0;
-        /*for(var i in self.streamData) {
-            total += self.streamData[i];
-        }*/
-        for (var i = 0; i < 80; i++) {
-            total += self.streamData[i];
-        }
-        self.volume = total;
-    };
-
-    // get the input stream from the audio element
-
-    var audioCtx = new (window.AudioContext || window.webkitAudioContext);
-    analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 256;
-    var source = audioCtx.createMediaElementSource(player);
-    source.connect(analyser);
-    analyser.connect(audioCtx.destination);
-    setInterval(sampleAudioStream, 20);
-
-    this.loadStream = function(track_url) {
-        var client_id = "237d195ad90846f5e6294ade2e8cf87b";
-
+    /**
+     * Loads the JSON stream data object from the URL of the track (as given in the location bar of the browser when browsing Soundcloud),
+     * and on success it calls the callback passed to it (for example, used to then send the stream_url to the audiosource object).
+     * @param track_url
+     * @param callback
+     */
+    this.loadStream = function(track_url, callback) {
         SC.initialize({
             client_id: client_id
         });
         SC.get('/resolve', { url: track_url }, function(track) {
             SC.get('/tracks/' + track.id, {}, function(sound, error) {
-                player.setAttribute('src', sound.stream_url + '?client_id=' + client_id);
-                player.play();
+                self.sound = sound;
+                self.streamUrl = sound.stream_url + '?client_id=' + client_id;
+                callback();
             });
         });
     };
 };
 
-window.onload = function() {
-    var visualizer = new Visualizer();
-    var audioSource = new SoundCloudAudioSource('player');
-    visualizer.init(
-            {
-                containerId: 'visualizer',
-                audioSource: audioSource
-            }
-    );
-    visualizer.resizeCanvas();
-    var submitButton = document.getElementById('submit');
-    submitButton.onclick = function() {
-        var track_url = document.getElementById('input').value;
-        audioSource.loadStream(track_url);
+/**
+ * Class to update the UI when a new sound is loaded
+ * @constructor
+ */
+var UiUpdater = function() {
+    var controlPanel = document.getElementById('controlPanel');
+    var trackInfoPanel = document.getElementById('trackInfoPanel');
+    var infoImage = document.getElementById('infoImage');
+    var infoArtist = document.getElementById('infoArtist');
+    var infoTrack = document.getElementById('infoTrack');
+
+    this.clearInfoPanel = function() {
+        // first clear the current contents
+        infoArtist.innerHTML = "";
+        infoTrack.innerHTML = "";
+        trackInfoPanel.className = 'hidden';
+    };
+    this.update = function(loader) {
+        // update the track and artist into in the controlPanel
+        var artistLink = document.createElement('a');
+        artistLink.setAttribute('href', loader.sound.user.permalink_url);
+        artistLink.innerHTML = loader.sound.user.username;
+        var trackLink = document.createElement('a');
+        trackLink.setAttribute('href', loader.sound.permalink_url);
+        trackLink.innerHTML = loader.sound.title;
+
+        infoImage.setAttribute('src', loader.sound.artwork_url);
+        infoArtist.appendChild(artistLink);
+        infoTrack.appendChild(trackLink);
+
+        // display the track info panel
+        trackInfoPanel.className = '';
+
+        // add a hash to the URL so it can be shared or saved
+        var trackToken = loader.sound.permalink_url.substr(22);
+        window.location = '#' + trackToken;
+    };
+    this.toggleControlPanel = function() {
+        if (controlPanel.className.indexOf('hidden') === 0) {
+            controlPanel.className = '';
+        } else {
+            controlPanel.className = 'hidden';
+        }
     };
 };
-</script>
-<style type="text/css">
-    * {
-        padding: 0;
-        margin: 0;
+
+window.onload = function() {
+
+    var visualizer = new Visualizer();
+    var audioSource = new SoundCloudAudioSource('player');
+    var loader = new SoundcloudLoader();
+    var uiUpdater = new UiUpdater();
+    var form = document.getElementById('form');
+    var loadAndUpdate = function(trackUrl) {
+        uiUpdater.clearInfoPanel();
+        loader.loadStream(trackUrl, function() {
+            audioSource.playStream(loader.streamUrl);
+            uiUpdater.update(loader);
+        });
+    };
+
+    visualizer.init({
+        containerId: 'visualizer',
+        audioSource: audioSource
+    });
+
+    // on load, check to see if there is a track token in the URL, and if so, load that automatically
+    if (window.location.hash) {
+        var trackUrl = 'https://soundcloud.com/' + window.location.hash.substr(1);
+        loadAndUpdate(trackUrl);
     }
-    body {
-        background-color: #000000;
+
+    // handle the form submit event to load the new URL
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var trackUrl = document.getElementById('input').value;
+        loadAndUpdate(trackUrl);
+    });
+    var toggleButton = document.getElementById('toggleButton')
+    toggleButton.onclick = function(e) {
+        e.preventDefault();
+        uiUpdater.toggleControlPanel();
     }
-    #controlPanel {
-        z-index: 50;
-        position: absolute;
-        bottom: 0px;
-    }
-</style>
-</head>
-<body>
-<div id="visualizer"></div>
-<div id="controlPanel">
-    <input id="input" placeholder="Paste Soundcloud URL here (https://soundcloud.com/artist/track)">
-    <button id="submit">Load & Play</button><br>
-    <audio id="player" controls=""></audio>
-</div>
-</body>
-</html>
+};
