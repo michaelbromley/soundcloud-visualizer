@@ -432,6 +432,7 @@ var SoundcloudLoader = function() {
     var client_id = "237d195ad90846f5e6294ade2e8cf87b";
     this.sound = {};
     this.streamUrl = "";
+    this.errorMessage = "";
 
     /**
      * Loads the JSON stream data object from the URL of the track (as given in the location bar of the browser when browsing Soundcloud),
@@ -439,16 +440,22 @@ var SoundcloudLoader = function() {
      * @param track_url
      * @param callback
      */
-    this.loadStream = function(track_url, callback) {
+    this.loadStream = function(track_url, successCallback, errorCallback) {
         SC.initialize({
             client_id: client_id
         });
-        SC.get('/resolve', { url: track_url }, function(track) {
-            SC.get('/tracks/' + track.id, {}, function(sound, error) {
+        SC.get('/resolve', { url: track_url }, function(sound) {
+            if (sound.errors) {
+                self.errorMessage = "";
+                for (var i = 0; i < sound.errors.length; i++) {
+                    self.errorMessage += sound.errors[i].error_message + '<br>';
+                }
+                errorCallback();
+            } else {
                 self.sound = sound;
                 self.streamUrl = sound.stream_url + '?client_id=' + client_id;
-                callback();
-            });
+                successCallback();
+            }
         });
     };
 };
@@ -463,6 +470,7 @@ var UiUpdater = function() {
     var infoImage = document.getElementById('infoImage');
     var infoArtist = document.getElementById('infoArtist');
     var infoTrack = document.getElementById('infoTrack');
+    var messageBox = document.getElementById('messageBox');
 
     this.clearInfoPanel = function() {
         // first clear the current contents
@@ -497,6 +505,29 @@ var UiUpdater = function() {
             controlPanel.className = 'hidden';
         }
     };
+    this.displayMessage = function(title, message) {
+        messageBox.innerHTML = ''; // reset the contents
+
+        var titleElement = document.createElement('h3');
+        titleElement.innerHTML = title;
+
+        var messageElement = document.createElement('p');
+        messageElement.innerHTML = message;
+
+        var closeButton = document.createElement('a');
+        closeButton.setAttribute('href', '#');
+        closeButton.innerHTML = 'close';
+        closeButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            messageBox.className = 'hidden';
+        });
+
+        messageBox.className = '';
+        // stick them into the container div
+        messageBox.appendChild(titleElement);
+        messageBox.appendChild(messageElement);
+        messageBox.appendChild(closeButton);
+    };
 };
 
 window.onload = function() {
@@ -507,11 +538,15 @@ window.onload = function() {
     var uiUpdater = new UiUpdater();
     var form = document.getElementById('form');
     var loadAndUpdate = function(trackUrl) {
-        uiUpdater.clearInfoPanel();
-        loader.loadStream(trackUrl, function() {
-            audioSource.playStream(loader.streamUrl);
-            uiUpdater.update(loader);
-        });
+        loader.loadStream(trackUrl,
+            function() {
+                uiUpdater.clearInfoPanel();
+                audioSource.playStream(loader.streamUrl);
+                uiUpdater.update(loader);
+            },
+            function() {
+                uiUpdater.displayMessage("Error", loader.errorMessage);
+            });
     };
 
     visualizer.init({
@@ -532,8 +567,14 @@ window.onload = function() {
         loadAndUpdate(trackUrl);
     });
     var toggleButton = document.getElementById('toggleButton')
-    toggleButton.onclick = function(e) {
+    toggleButton.addEventListener('click', function(e) {
         e.preventDefault();
         uiUpdater.toggleControlPanel();
-    }
+    });
+    var aboutButton = document.getElementById('credit');
+    aboutButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        var message = 'Soundcloud visualizer: a canvas and webaudio API experiment by <a href="http://www.michaelbromley.co.uk">Michael Bromley</a>.';
+        uiUpdater.displayMessage("About", message);
+    });
 };

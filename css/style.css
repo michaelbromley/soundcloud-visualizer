@@ -136,6 +136,29 @@ a:hover, a:active {
 #player {
     width: 95%;
 }
+#messageBox {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    opacity: 1;
+    max-height: 500px;
+    -webkit-transition: opacity 0.5s, max-height 0.5s, padding 0.5s;
+    -moz-transition: opacity 0.5s, max-height 0.5s, padding 0.5s;
+    transition: opacity 0.5s, max-height 0.5s, padding 0.5s;
+    z-index: 500;
+    overflow: hidden;
+}
+#messageBox.hidden {
+    opacity: 0;
+    max-height: 0;
+    padding: 0;
+}
+#messageBox a:link, #messageBox a:visited {
+    color: #666;
+}
 footer {
     position: absolute;
     bottom: 0;
