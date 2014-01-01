@@ -47,10 +47,10 @@ body {
 }
 a, a:visited {
     text-decoration: none;
-    color: #999;
+    color: #c6c6c6;
 }
 a:hover, a:active {
-    color: #ccc;
+    color: #fff;
 }
 #controlPanel {
     z-index: 50;
@@ -138,7 +138,7 @@ a:hover, a:active {
 }
 #messageBox {
     position: absolute;
-    top: 50%;
+    top: 40%;
     width: 100%;
     padding: 20px 0;
     text-align: center;

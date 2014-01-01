@@ -40,6 +40,7 @@ var MicrophoneAudioSource = function() {
         setInterval(sampleAudioStream, 20);
     }, function(){ alert("error getting microphone input."); });
 };
+
 var SoundCloudAudioSource = function(audioElement) {
     var player = document.getElementById(audioElement);
     var self = this;
@@ -66,6 +67,10 @@ var SoundCloudAudioSource = function(audioElement) {
     this.playStream = function(streamUrl) {
         // get the input stream from the audio element
         player.setAttribute('src', streamUrl);
+        /*var source = document.createElement('source');
+        source.setAttribute('src', streamUrl);
+        source.setAttribute('type', 'audio/ogg');
+        player.appendChild(source);*/
         player.play();
     }
 };
@@ -450,6 +455,7 @@ var SoundcloudLoader = function() {
                 for (var i = 0; i < sound.errors.length; i++) {
                     self.errorMessage += sound.errors[i].error_message + '<br>';
                 }
+                self.errorMessage += 'Make sure the URL has the correct format: https://soundcloud.com/user/title-of-the-track';
                 errorCallback();
             } else {
                 self.sound = sound;
@@ -487,7 +493,8 @@ var UiUpdater = function() {
         trackLink.setAttribute('href', loader.sound.permalink_url);
         trackLink.innerHTML = loader.sound.title;
 
-        infoImage.setAttribute('src', loader.sound.artwork_url);
+        var image = loader.sound.artwork_url ? loader.sound.artwork_url : loader.sound.user.avatar_url; // if no track artwork exists, use the user's avatar.
+        infoImage.setAttribute('src', image);
         infoArtist.appendChild(artistLink);
         infoTrack.appendChild(trackLink);
 
@@ -530,7 +537,7 @@ var UiUpdater = function() {
     };
 };
 
-window.onload = function() {
+window.onload = function init() {
 
     var visualizer = new Visualizer();
     var audioSource = new SoundCloudAudioSource('player');
@@ -543,6 +550,7 @@ window.onload = function() {
                 uiUpdater.clearInfoPanel();
                 audioSource.playStream(loader.streamUrl);
                 uiUpdater.update(loader);
+                setTimeout(uiUpdater.toggleControlPanel, 3000); // auto-hide the control panel
             },
             function() {
                 uiUpdater.displayMessage("Error", loader.errorMessage);
@@ -554,6 +562,8 @@ window.onload = function() {
         audioSource: audioSource
     });
 
+
+    uiUpdater.toggleControlPanel();
     // on load, check to see if there is a track token in the URL, and if so, load that automatically
     if (window.location.hash) {
         var trackUrl = 'https://soundcloud.com/' + window.location.hash.substr(1);
@@ -574,7 +584,8 @@ window.onload = function() {
     var aboutButton = document.getElementById('credit');
     aboutButton.addEventListener('click', function(e) {
         e.preventDefault();
-        var message = 'Soundcloud visualizer: a canvas and webaudio API experiment by <a href="http://www.michaelbromley.co.uk">Michael Bromley</a>.';
+        var message = 'Soundcloud visualizer: a canvas and webaudio API experiment by <a href="http://www.michaelbromley.co.uk">Michael Bromley</a>.<br>' +
+            'For more information, visit the project\'s <a href="https://github.com/michaelbromley/webAudio">Github page</a>';
         uiUpdater.displayMessage("About", message);
     });
 };
