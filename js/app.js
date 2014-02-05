@@ -76,7 +76,14 @@ var SoundCloudAudioSource = function(audioElement,loader,uiUpdater) {
     }
 
     this.directStream = function(direction){
-        if(loader.sound.kind=="playlist"){
+        if(direction=='toggle'){
+            if (player.paused) {
+                player.play();
+            } else {
+                player.pause();
+            }
+        }
+        else if(loader.sound.kind=="playlist"){
             if(direction=='coasting') {
                 loader.streamPlaylistIndex++;
             }else if(direction=='forward') {
@@ -635,6 +642,10 @@ window.onload = function init() {
      
     function keyControls(e) {
         switch(e.keyCode) {
+            case 32:
+                // spacebar pressed
+                audioSource.directStream('toggle');
+                break;
             case 37:
                 // left key pressed
                 audioSource.directStream('backward');
