@@ -43,7 +43,7 @@ var MicrophoneAudioSource = function() {
     }, function(){ alert("error getting microphone input."); });
 };
 
-var SoundCloudAudioSource = function(audioElement) {
+var SoundCloudAudioSource = function(audioElement,loader) {
     var player = document.getElementById(audioElement);
     var self = this;
     var analyser;
@@ -68,6 +68,13 @@ var SoundCloudAudioSource = function(audioElement) {
     this.streamData = new Uint8Array(128);
     this.playStream = function(streamUrl) {
         // get the input stream from the audio element
+        player.addEventListener('ended', function(){
+           loader.streamPlaylistIndex++;
+           if(loader.sound.kind=="playlist" && loader.streamPlaylistIndex<=loader.sound.track_count-1) {
+               player.setAttribute('src',loader.streamUrl());
+               player.play();
+           }
+        });
         player.setAttribute('src', streamUrl);
         player.play();
     }
@@ -435,7 +442,7 @@ var Visualizer = function() {
  */
 var SoundcloudLoader = function() {
     var self = this;
-    var client_id = "YOUR_SOUNDCLOUD_CLIENT_ID"; // to get an ID go to http://developers.soundcloud.com/
+    var client_id = "07a19efd09110c4085f3835842327b18"; // to get an ID go to http://developers.soundcloud.com/
     this.sound = {};
     this.streamUrl = "";
     this.errorMessage = "";
@@ -459,9 +466,19 @@ var SoundcloudLoader = function() {
                 self.errorMessage += 'Make sure the URL has the correct format: https://soundcloud.com/user/title-of-the-track';
                 errorCallback();
             } else {
-                self.sound = sound;
-                self.streamUrl = sound.stream_url + '?client_id=' + client_id;
-                successCallback();
+
+                if(sound.kind=="playlist"){
+                    self.sound = sound;
+                    self.streamPlaylistIndex = 0;
+                    self.streamUrl = function(){
+                        return sound.tracks[self.streamPlaylistIndex].stream_url + '?client_id=' + client_id;
+                    }
+                    successCallback();
+                }else{
+                    self.sound = sound;
+                    self.streamUrl = function(){ return sound.stream_url + '?client_id=' + client_id; };
+                    successCallback();
+                }
             }
         });
     };
@@ -541,15 +558,15 @@ var UiUpdater = function() {
 window.onload = function init() {
 
     var visualizer = new Visualizer();
-    var audioSource = new SoundCloudAudioSource('player');
     var loader = new SoundcloudLoader();
+    var audioSource = new SoundCloudAudioSource('player',loader);
     var uiUpdater = new UiUpdater();
     var form = document.getElementById('form');
     var loadAndUpdate = function(trackUrl) {
         loader.loadStream(trackUrl,
             function() {
                 uiUpdater.clearInfoPanel();
-                audioSource.playStream(loader.streamUrl);
+                audioSource.playStream(loader.streamUrl());
                 uiUpdater.update(loader);
                 setTimeout(uiUpdater.toggleControlPanel, 3000); // auto-hide the control panel
             },
