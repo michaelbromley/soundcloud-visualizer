@@ -43,7 +43,7 @@ var MicrophoneAudioSource = function() {
     }, function(){ alert("error getting microphone input."); });
 };
 
-var SoundCloudAudioSource = function(audioElement,loader) {
+var SoundCloudAudioSource = function(audioElement,loader,uiUpdater) {
     var player = document.getElementById(audioElement);
     var self = this;
     var analyser;
@@ -88,6 +88,7 @@ var SoundCloudAudioSource = function(audioElement,loader) {
             }
             if(loader.streamPlaylistIndex>=0 && loader.streamPlaylistIndex<=loader.sound.track_count-1) {
                player.setAttribute('src',loader.streamUrl());
+               uiUpdater.update(loader);
                player.play();
             }
         }
@@ -523,11 +524,20 @@ var UiUpdater = function() {
         artistLink.innerHTML = loader.sound.user.username;
         var trackLink = document.createElement('a');
         trackLink.setAttribute('href', loader.sound.permalink_url);
-        trackLink.innerHTML = loader.sound.title;
+
+        if(loader.sound.kind=="playlist"){
+            trackLink.innerHTML = "<p>" + loader.sound.tracks[loader.streamPlaylistIndex].title + "</p>" + "<p>"+loader.sound.title+"</p>";
+        }else{
+            trackLink.innerHTML = loader.sound.title;
+        }
 
         var image = loader.sound.artwork_url ? loader.sound.artwork_url : loader.sound.user.avatar_url; // if no track artwork exists, use the user's avatar.
         infoImage.setAttribute('src', image);
+
+        infoArtist.innerHTML = '';
         infoArtist.appendChild(artistLink);
+
+        infoTrack.innerHTML = '';
         infoTrack.appendChild(trackLink);
 
         // display the track info panel
@@ -573,8 +583,8 @@ window.onload = function init() {
 
     var visualizer = new Visualizer();
     var loader = new SoundcloudLoader();
-    var audioSource = new SoundCloudAudioSource('player',loader);
     var uiUpdater = new UiUpdater();
+    var audioSource = new SoundCloudAudioSource('player',loader,uiUpdater);
     var form = document.getElementById('form');
     var loadAndUpdate = function(trackUrl) {
         loader.loadStream(trackUrl,
