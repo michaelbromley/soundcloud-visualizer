@@ -464,7 +464,7 @@ var Visualizer = function() {
  */
 var SoundcloudLoader = function() {
     var self = this;
-    var client_id = "07a19efd09110c4085f3835842327b18"; // to get an ID go to http://developers.soundcloud.com/
+    var client_id = "YOUR_SOUNDCLOUD_CLIENT_ID"; // to get an ID go to http://developers.soundcloud.com/
     this.sound = {};
     this.streamUrl = "";
     this.errorMessage = "";
