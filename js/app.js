@@ -69,14 +69,28 @@ var SoundCloudAudioSource = function(audioElement,loader) {
     this.playStream = function(streamUrl) {
         // get the input stream from the audio element
         player.addEventListener('ended', function(){
-           loader.streamPlaylistIndex++;
-           if(loader.sound.kind=="playlist" && loader.streamPlaylistIndex<=loader.sound.track_count-1) {
-               player.setAttribute('src',loader.streamUrl());
-               player.play();
-           }
+            self.directStream('coasting');
         });
         player.setAttribute('src', streamUrl);
         player.play();
+    }
+
+    this.directStream = function(direction){
+        if(loader.sound.kind=="playlist"){
+            if(direction=='coasting') {
+                loader.streamPlaylistIndex++;
+            }else if(direction=='forward') {
+                if(loader.streamPlaylistIndex>=loader.sound.track_count-1) loader.streamPlaylistIndex = 0;
+                else loader.streamPlaylistIndex++;
+            }else{
+                if(loader.streamPlaylistIndex<=0) loader.streamPlaylistIndex = loader.sound.track_count-1;
+                else loader.streamPlaylistIndex--;
+            }
+            if(loader.streamPlaylistIndex>=0 && loader.streamPlaylistIndex<=loader.sound.track_count-1) {
+               player.setAttribute('src',loader.streamUrl());
+               player.play();
+            }
+        }
     }
 };
 /**
@@ -606,4 +620,21 @@ window.onload = function init() {
             'For more information, visit the project\'s <a href="https://github.com/michaelbromley/soundcloud-visualizer">Github page</a>';
         uiUpdater.displayMessage("About", message);
     });
+
+    window.addEventListener("keydown", keyControls, false);
+     
+    function keyControls(e) {
+        switch(e.keyCode) {
+            case 37:
+                // left key pressed
+                audioSource.directStream('backward');
+                break;
+            case 39:
+                // right key pressed
+                audioSource.directStream('forward');
+                break;
+        }   
+    }
+
+
 };
