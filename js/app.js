@@ -43,8 +43,7 @@ var MicrophoneAudioSource = function() {
     }, function(){ alert("error getting microphone input."); });
 };
 
-var SoundCloudAudioSource = function(audioElement) {
-    var player = document.getElementById(audioElement);
+var SoundCloudAudioSource = function(player) {
     var self = this;
     var analyser;
     var audioCtx = new (window.AudioContext || window.webkitAudioContext);
@@ -68,6 +67,9 @@ var SoundCloudAudioSource = function(audioElement) {
     this.streamData = new Uint8Array(128);
     this.playStream = function(streamUrl) {
         // get the input stream from the audio element
+        player.addEventListener('ended', function(){
+            self.directStream('coasting');
+        });
         player.setAttribute('src', streamUrl);
         player.play();
     }
@@ -433,12 +435,14 @@ var Visualizer = function() {
 /**
  * Makes a request to the Soundcloud API and returns the JSON data.
  */
-var SoundcloudLoader = function() {
+var SoundcloudLoader = function(player,uiUpdater) {
     var self = this;
     var client_id = "YOUR_SOUNDCLOUD_CLIENT_ID"; // to get an ID go to http://developers.soundcloud.com/
     this.sound = {};
     this.streamUrl = "";
     this.errorMessage = "";
+    this.player = player;
+    this.uiUpdater = uiUpdater;
 
     /**
      * Loads the JSON stream data object from the URL of the track (as given in the location bar of the browser when browsing Soundcloud),
@@ -459,12 +463,51 @@ var SoundcloudLoader = function() {
                 self.errorMessage += 'Make sure the URL has the correct format: https://soundcloud.com/user/title-of-the-track';
                 errorCallback();
             } else {
-                self.sound = sound;
-                self.streamUrl = sound.stream_url + '?client_id=' + client_id;
-                successCallback();
+
+                if(sound.kind=="playlist"){
+                    self.sound = sound;
+                    self.streamPlaylistIndex = 0;
+                    self.streamUrl = function(){
+                        return sound.tracks[self.streamPlaylistIndex].stream_url + '?client_id=' + client_id;
+                    }
+                    successCallback();
+                }else{
+                    self.sound = sound;
+                    self.streamUrl = function(){ return sound.stream_url + '?client_id=' + client_id; };
+                    successCallback();
+                }
             }
         });
     };
+
+
+    this.directStream = function(direction){
+        if(direction=='toggle'){
+            if (this.player.paused) {
+                this.player.play();
+            } else {
+                this.player.pause();
+            }
+        }
+        else if(this.sound.kind=="playlist"){
+            if(direction=='coasting') {
+                this.streamPlaylistIndex++;
+            }else if(direction=='forward') {
+                if(this.streamPlaylistIndex>=this.sound.track_count-1) this.streamPlaylistIndex = 0;
+                else this.streamPlaylistIndex++;
+            }else{
+                if(this.streamPlaylistIndex<=0) this.streamPlaylistIndex = this.sound.track_count-1;
+                else this.streamPlaylistIndex--;
+            }
+            if(this.streamPlaylistIndex>=0 && this.streamPlaylistIndex<=this.sound.track_count-1) {
+               this.player.setAttribute('src',this.streamUrl());
+               this.uiUpdater.update(this);
+               this.player.play();
+            }
+        }
+    }
+
+
 };
 
 /**
@@ -492,11 +535,20 @@ var UiUpdater = function() {
         artistLink.innerHTML = loader.sound.user.username;
         var trackLink = document.createElement('a');
         trackLink.setAttribute('href', loader.sound.permalink_url);
-        trackLink.innerHTML = loader.sound.title;
+
+        if(loader.sound.kind=="playlist"){
+            trackLink.innerHTML = "<p>" + loader.sound.tracks[loader.streamPlaylistIndex].title + "</p>" + "<p>"+loader.sound.title+"</p>";
+        }else{
+            trackLink.innerHTML = loader.sound.title;
+        }
 
         var image = loader.sound.artwork_url ? loader.sound.artwork_url : loader.sound.user.avatar_url; // if no track artwork exists, use the user's avatar.
         infoImage.setAttribute('src', image);
+
+        infoArtist.innerHTML = '';
         infoArtist.appendChild(artistLink);
+
+        infoTrack.innerHTML = '';
         infoTrack.appendChild(trackLink);
 
         // display the track info panel
@@ -541,15 +593,17 @@ var UiUpdater = function() {
 window.onload = function init() {
 
     var visualizer = new Visualizer();
-    var audioSource = new SoundCloudAudioSource('player');
-    var loader = new SoundcloudLoader();
+    var player =  document.getElementById('player');
     var uiUpdater = new UiUpdater();
+    var loader = new SoundcloudLoader(player,uiUpdater);
+
+    var audioSource = new SoundCloudAudioSource(player);
     var form = document.getElementById('form');
     var loadAndUpdate = function(trackUrl) {
         loader.loadStream(trackUrl,
             function() {
                 uiUpdater.clearInfoPanel();
-                audioSource.playStream(loader.streamUrl);
+                audioSource.playStream(loader.streamUrl());
                 uiUpdater.update(loader);
                 setTimeout(uiUpdater.toggleControlPanel, 3000); // auto-hide the control panel
             },
@@ -589,4 +643,25 @@ window.onload = function init() {
             'For more information, visit the project\'s <a href="https://github.com/michaelbromley/soundcloud-visualizer">Github page</a>';
         uiUpdater.displayMessage("About", message);
     });
+
+    window.addEventListener("keydown", keyControls, false);
+     
+    function keyControls(e) {
+        switch(e.keyCode) {
+            case 32:
+                // spacebar pressed
+                loader.directStream('toggle');
+                break;
+            case 37:
+                // left key pressed
+                loader.directStream('backward');
+                break;
+            case 39:
+                // right key pressed
+                loader.directStream('forward');
+                break;
+        }   
+    }
+
+
 };
