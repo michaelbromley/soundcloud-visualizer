@@ -6,7 +6,20 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<div id="info">
+    Soundcloud visualizer: a canvas and webaudio API experiment by <a href="http://www.michaelbromley.co.uk">Michael Bromley</a>.<br>
+    For more information, visit the project's <a href="https://github.com/michaelbromley/soundcloud-visualizer">Github page</a><br><br>
+    <b>Instructions</b><br>
+    Paste the URL of a Soundcloud track or playlist into form and press enter.<br><br>
+    <b>Example track:</b> https://soundcloud.com/manchesterorchestra/simple-math<br>
+    <b>Example playlist:</b> https://soundcloud.com/manchesterorchestra/sets/simple-math-album-stream<br><br>
+    <b>Controls</b><br>
+    <b>space bar</b> - toggle play/pause<br>
+    <b>right/left arrow</b> - skip forward/backwards through playlist<br>
+</div>
+
 <div id="visualizer"></div>
+
 <div id="controlPanel" class="hidden">
     <div id="tab"><a href="#" id="toggleButton"><i class="icon-menu"></i></a></div>
     <div id="trackInfoPanel" class="hidden">
@@ -22,13 +35,16 @@
         <audio id="player" controls="" autoplay="" preload autobuffer></audio>
     </div>
 </div>
+
 <div id="messageBox" class="hidden">
 </div>
+
 <footer>
     <a href="#" id="credit"> <i class="icon-info"></i> About</a>
     <span id="github"><a href="https://github.com/michaelbromley/soundcloud-visualizer"><i class="icon-github"></i> Source on Github</a></span>
     <span id="scLogo"><a href="http://soundcloud.com/"><img src="assets/powered_by_white.png"></a></span>
 </footer>
+
 <script src="http://connect.soundcloud.com/sdk.js"></script>
 <script src="js/app.js"></script>
 </body>

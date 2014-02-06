@@ -639,8 +639,7 @@ window.onload = function init() {
     var aboutButton = document.getElementById('credit');
     aboutButton.addEventListener('click', function(e) {
         e.preventDefault();
-        var message = 'Soundcloud visualizer: a canvas and webaudio API experiment by <a href="http://www.michaelbromley.co.uk">Michael Bromley</a>.<br>' +
-            'For more information, visit the project\'s <a href="https://github.com/michaelbromley/soundcloud-visualizer">Github page</a>';
+        var message = document.getElementById('info').innerHTML;
         uiUpdater.displayMessage("About", message);
     });
 
