@@ -19,6 +19,14 @@ Go to [https://soundcloud.com] (https://soundcloud.com) and find some music. Fro
 You'll notice that part of the the track URL is added to the visualizer's URL. This makes it possible to easily save or share the state. So, if you find a good track that looks cool with
  the visualization that you want to share, just give the new URL to someone and when they load it up, it'll automatically start streaming and visualizing that track.
 
+## Playlists
+Playlists (also known as "sets" in Soundcloud) can now be pasted into the visualizer, which will cause the whole playlist to play in sequence. You can navigate the playlist using the controls below.
+
+## Controls
+- `spacebar` = toggle play/pause
+- `>` (right arrow key) = skip forward to next track in playlist
+- `<` (left arrow key) = skip backward to previous track in playlist
+
 # Issues
 
 Since the web audio API is pretty new, browser support is patchy:
@@ -33,7 +41,7 @@ Since the web audio API is pretty new, browser support is patchy:
 
 I can think of a few improvements that I might implement, or someone else might want to:
 
-- Support for playlists. So you can paste the playlist URL and it just keeps going through to the end of the playlist.
+~~- Support for playlists. So you can paste the playlist URL and it just keeps going through to the end of the playlist.~~ - DONE (thanks to [adg29](https://github.com/adg29))
 - More types of visualization. I've written the code in a pretty modular way so it's simple to write a visualization that can plug into the app (see below)
 - Better browser support. I'm sure there can be more done on this to get it working at least in Firefox and mobile WebKit browsers, with perhaps fallbacks for IE.
 
