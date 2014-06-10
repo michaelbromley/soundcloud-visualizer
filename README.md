@@ -56,3 +56,7 @@ The audio data from Soundcloud is processed by the SoundCloudAudioSource object,
 Your visualization object just needs to consume this object and then it will be able to do whatever it wants to with the data provided. The visualization object should make
 it's own canvas elements and append them to the `#visualizer` div.
 
+# License
+
+MIT
+
