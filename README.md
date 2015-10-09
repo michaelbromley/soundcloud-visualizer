@@ -12,6 +12,10 @@ Thanks to [Soundcloud] (https://soundcloud.com) for providing a great open API!
 
 [Here's a working demo] (http://www.michaelbromley.co.uk/experiments/soundcloud-vis/#muse/undisclosed-desires). Enjoy and share!
 
+**Update May 2015** - As of latest versions of Chrome (42+) and recent versions of Firefox, changes in the way cross-origin audio is handled mean this demo may not work. It's a well-known issue for everyone who's used the SoundCloud API for JavaScript visualizations (there are a lot of us). 
+
+Basically, the CORS headers are set inconsistently by the various CDN servers used by Soundcloud. This means that some tracks will work, and some tracks will fail to play altogether :(
+
 # Instructions
 
 Go to [https://soundcloud.com] (https://soundcloud.com) and find some music. From the individual song page, copy the url and paste it into the input of the visualizer, then hit enter or press the play button.
