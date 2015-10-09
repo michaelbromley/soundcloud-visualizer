@@ -49,6 +49,7 @@ var SoundCloudAudioSource = function(player) {
     var audioCtx = new (window.AudioContext || window.webkitAudioContext);
     analyser = audioCtx.createAnalyser();
     analyser.fftSize = 256;
+    player.crossOrigin = "anonymous";
     var source = audioCtx.createMediaElementSource(player);
     source.connect(analyser);
     analyser.connect(audioCtx.destination);
@@ -469,7 +470,7 @@ var SoundcloudLoader = function(player,uiUpdater) {
                     self.streamPlaylistIndex = 0;
                     self.streamUrl = function(){
                         return sound.tracks[self.streamPlaylistIndex].stream_url + '?client_id=' + client_id;
-                    }
+                    };
                     successCallback();
                 }else{
                     self.sound = sound;
