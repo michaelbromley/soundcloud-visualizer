@@ -66,12 +66,12 @@ var SoundCloudAudioSource = function(player) {
     // public properties and methods
     this.volume = 0;
     this.streamData = new Uint8Array(128);
-    this.playStream = function(streamUrl) {
+    this.playStream = function(loader) {
         // get the input stream from the audio element
         player.addEventListener('ended', function(){
-            self.directStream('coasting');
+            loader.directStream('coasting');
         });
-        player.setAttribute('src', streamUrl);
+        player.setAttribute('src', loader.streamUrl());
         player.play();
     }
 };
@@ -604,7 +604,7 @@ window.onload = function init() {
         loader.loadStream(trackUrl,
             function() {
                 uiUpdater.clearInfoPanel();
-                audioSource.playStream(loader.streamUrl());
+                audioSource.playStream(loader);
                 uiUpdater.update(loader);
                 setTimeout(uiUpdater.toggleControlPanel, 3000); // auto-hide the control panel
             },
