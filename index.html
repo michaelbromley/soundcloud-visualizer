@@ -29,15 +29,14 @@
     </div>
     <div id="playerControls">
         <form id="form">
-            <input id="input" placeholder="Paste Soundcloud URL here (https://soundcloud.com/artist/track)">
+            <input type="url" id="input" placeholder="Paste Soundcloud URL here (https://soundcloud.com/artist/track)" autofocus required>
             <button type="submit" id="submit"><i class="icon-play"></i></button><br>
         </form>
-        <audio id="player" controls="" autoplay="" preload autobuffer></audio>
+        <audio id="player" controls autoplay preload autobuffer></audio>
     </div>
 </div>
 
-<div id="messageBox" class="hidden">
-</div>
+<div id="messageBox" class="hidden"></div>
 
 <footer>
     <a href="#" id="credit"> <i class="icon-info"></i> About</a>
@@ -45,7 +44,7 @@
     <span id="scLogo"><a href="http://soundcloud.com/"><img src="assets/powered_by_white.png"></a></span>
 </footer>
 
-<script src="http://connect.soundcloud.com/sdk.js"></script>
+<script src="https://connect.soundcloud.com/sdk.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
