@@ -4,13 +4,13 @@ This is an experiment in using the web audio API together with canvas to make so
 
 Since this is my first foray into the world of both canvas and web audio, I have slowly iterated over a number of ideas and trials which are all in the `/tests` folder.
 
-The visual style was inspired by the artwork of the album ["The Resistance"] (https://en.wikipedia.org/wiki/File:Theresistance.jpg) by Muse.
+The visual style was inspired by the artwork of the album ["The Resistance"](https://en.wikipedia.org/wiki/File:Theresistance.jpg) by Muse.
 
-Thanks to [Soundcloud] (https://soundcloud.com) for providing a great open API!
+Thanks to [Soundcloud](https://soundcloud.com) for providing a great open API!
 
 # Demo
 
-[Here's a working demo] (https://www.michaelbromley.co.uk/experiments/soundcloud-vis/#muse/undisclosed-desires). Enjoy and share!
+[Here's a working demo](https://www.michaelbromley.co.uk/experiments/soundcloud-vis/#muse/undisclosed-desires). Enjoy and share!
 
 **Update May 2015** - As of latest versions of Chrome (42+) and recent versions of Firefox, changes in the way cross-origin audio is handled mean this demo may not work. It's a well-known issue for everyone who's used the SoundCloud API for JavaScript visualizations (there are a lot of us). 
 
@@ -18,7 +18,7 @@ Basically, the CORS headers are set inconsistently by the various CDN servers us
 
 # Instructions
 
-Go to [https://soundcloud.com] (https://soundcloud.com) and find some music. From the individual song page, copy the url and paste it into the input of the visualizer, then hit enter or press the play button.
+Go to [https://soundcloud.com](https://soundcloud.com) and find some music. From the individual song page, copy the url and paste it into the input of the visualizer, then hit enter or press the play button.
 
 You'll notice that part of the the track URL is added to the visualizer's URL. This makes it possible to easily save or share the state. So, if you find a good track that looks cool with
  the visualization that you want to share, just give the new URL to someone and when they load it up, it'll automatically start streaming and visualizing that track.
